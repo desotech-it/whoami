@@ -1,9 +1,10 @@
 package main
 
 import (
+	"desotech/whoami/app"
 	"desotech/whoami/server"
 )
 
 func main() {
-	server.Start()
+	server.Start(app.GetConfig())
 }

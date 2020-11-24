@@ -1,6 +1,7 @@
 package server
 
 import (
+	"desotech/whoami/app"
 	"desotech/whoami/view"
 	"fmt"
 	"io"
@@ -74,7 +75,7 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(w, image)
 }
 
-func Start() {
+func Start(config *app.Config) {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/images/", imageHandler)
 	http.HandleFunc("/cpustress", cpustressHandler)
@@ -86,5 +87,7 @@ func Start() {
 	http.HandleFunc("/zee", zeeHandler)
 	http.HandleFunc("/captainkube", captainkubeHandler)
 	http.HandleFunc("/phippy", phippyHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	address := fmt.Sprintf(":%d", config.Port)
+	log.Fatal(http.ListenAndServe(address, nil))
 }
