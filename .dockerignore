@@ -1,0 +1,10 @@
+# Git stuff
+.git
+.gitignore
+
+# Built executable
+*.exe
+
+# Docker stuff
+Dockerfile
+.dockerignore
