@@ -43,19 +43,39 @@ func metricsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func goldieHandler(w http.ResponseWriter, r *http.Request) {
-	view.WriteImageView(w, "goldie.png")
+	v := view.ImageView{
+		Title:    "Goldie",
+		Filename: "goldie.png",
+		AltText:  "goldie",
+	}
+	v.Write(w)
 }
 
 func zeeHandler(w http.ResponseWriter, r *http.Request) {
-	view.WriteImageView(w, "zee.png")
+	v := view.ImageView{
+		Title:    "Zee",
+		Filename: "zee.png",
+		AltText:  "zee",
+	}
+	v.Write(w)
 }
 
 func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
-	view.WriteImageView(w, "captain-kube.png")
+	v := view.ImageView{
+		Title:    "Captain Kube",
+		Filename: "captain-kube.png",
+		AltText:  "captain kube",
+	}
+	v.Write(w)
 }
 
 func phippyHandler(w http.ResponseWriter, r *http.Request) {
-	view.WriteImageView(w, "phippy.png")
+	v := view.ImageView{
+		Title:    "Phippy",
+		Filename: "phippy.png",
+		AltText:  "phippy",
+	}
+	v.Write(w)
 }
 
 func imageHandler(w http.ResponseWriter, r *http.Request) {
