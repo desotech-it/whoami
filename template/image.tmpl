@@ -4,4 +4,6 @@
 
 {{define "main"}}
 <img src="images/{{.Filename}}" alt="{{.AltText}}">
+{{template "whoami" .Info}}
+
 {{end}}

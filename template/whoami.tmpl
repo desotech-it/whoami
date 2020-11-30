@@ -1,0 +1,10 @@
+{{define "whoami"}}
+<dl>
+	<dt>Hostname</dt>
+	<dd>{{.Hostname}}</dd>
+	{{range .Addresses}}
+	<dt>IP</dt>
+	<dd>{{.}}</dd>
+	{{end}}
+</dl>
+{{end}}

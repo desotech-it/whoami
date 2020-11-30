@@ -6,5 +6,9 @@ import (
 )
 
 func main() {
-	server.Start(app.GetConfig())
+	config := app.GetConfig()
+	server := server.Server{
+		config.Port,
+	}
+	server.Start()
 }

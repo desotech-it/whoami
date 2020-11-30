@@ -47,6 +47,7 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 		Title:    "Goldie",
 		Filename: "goldie.png",
 		AltText:  "goldie",
+		Info:     app.Info,
 	}
 	v.Write(w)
 }
@@ -56,6 +57,7 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 		Title:    "Zee",
 		Filename: "zee.png",
 		AltText:  "zee",
+		Info:     app.Info,
 	}
 	v.Write(w)
 }
@@ -65,6 +67,7 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 		Title:    "Captain Kube",
 		Filename: "captain-kube.png",
 		AltText:  "captain kube",
+		Info:     app.Info,
 	}
 	v.Write(w)
 }
@@ -74,6 +77,7 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 		Title:    "Phippy",
 		Filename: "phippy.png",
 		AltText:  "phippy",
+		Info:     app.Info,
 	}
 	v.Write(w)
 }
@@ -95,7 +99,11 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(w, image)
 }
 
-func Start(config *app.Config) {
+type Server struct {
+	Port       uint64
+}
+
+func (s *Server) Start() {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/images/", imageHandler)
 	http.HandleFunc("/cpustress", cpustressHandler)
@@ -108,6 +116,6 @@ func Start(config *app.Config) {
 	http.HandleFunc("/captainkube", captainkubeHandler)
 	http.HandleFunc("/phippy", phippyHandler)
 
-	address := fmt.Sprintf(":%d", config.Port)
+	address := fmt.Sprintf(":%d", s.Port)
 	log.Fatal(http.ListenAndServe(address, nil))
 }
