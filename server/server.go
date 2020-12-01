@@ -31,11 +31,47 @@ func memstressHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
-	unimplementedHandler(w, r)
+	health := app.GetHealth()
+	json, err := health.GetJsonResponse()
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if health == app.STOPPING || health == app.DOWN {
+		http.Error(w, string(json), http.StatusServiceUnavailable)
+		return
+	}
+
+	if health == app.ERRORED {
+		http.Error(w, string(json), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(json)
 }
 
 func livenessHandler(w http.ResponseWriter, r *http.Request) {
-	unimplementedHandler(w, r)
+	liveness := app.GetLiveness()
+	json, err := liveness.GetJsonResponse()
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if liveness == app.DOWN {
+		http.Error(w, string(json), http.StatusServiceUnavailable)
+		return
+	}
+
+	if liveness == app.ERRORED {
+		http.Error(w, string(json), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(json)
 }
 
 func metricsHandler(w http.ResponseWriter, r *http.Request) {
