@@ -3,8 +3,8 @@ package server
 import (
 	"bytes"
 	"desotech/whoami/app"
-	"desotech/whoami/view"
 	"desotech/whoami/server/util"
+	"desotech/whoami/view"
 	"fmt"
 	"io"
 	"log"

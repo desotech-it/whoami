@@ -1,11 +1,11 @@
 package util
 
 import (
+	"mime"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
-	"net/http"
-	"mime"
 )
 
 func AddContentInfoToResponseHeades(w http.ResponseWriter, f *os.File) error {
