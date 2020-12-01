@@ -11,6 +11,9 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
+	// Prometheus
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func unimplementedHandler(w http.ResponseWriter, r *http.Request) {
@@ -76,10 +79,6 @@ func livenessHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(json)
-}
-
-func metricsHandler(w http.ResponseWriter, r *http.Request) {
-	unimplementedHandler(w, r)
 }
 
 func goldieHandler(w http.ResponseWriter, r *http.Request) {
@@ -166,7 +165,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/memstress", memstressHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/liveness", livenessHandler)
-	http.HandleFunc("/metrics", metricsHandler)
+	http.Handle("/metrics", promhttp.Handler())
 	http.HandleFunc("/goldie", goldieHandler)
 	http.HandleFunc("/zee", zeeHandler)
 	http.HandleFunc("/captainkube", captainkubeHandler)
