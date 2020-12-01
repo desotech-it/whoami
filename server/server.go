@@ -136,7 +136,7 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Server struct {
-	Port       uint64
+	Port uint64
 }
 
 func (s *Server) Start() {
