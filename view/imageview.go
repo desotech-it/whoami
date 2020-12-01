@@ -11,12 +11,14 @@ type ImageView struct {
 	Filename string
 	AltText  string
 	Info     app.WhoamiInfo
+	Request  string
 }
 
 var templateFiles = []string{
 	"template/image.tmpl",
 	"template/base.tmpl",
 	"template/whoami.tmpl",
+	"template/request.tmpl",
 }
 
 func (v *ImageView) Write(w io.Writer) error {

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"desotech/whoami/app"
 	"desotech/whoami/view"
 	"fmt"
@@ -84,6 +85,7 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "goldie.png",
 		AltText:  "goldie",
 		Info:     app.Info,
+		Request:  getRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -94,6 +96,7 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "zee.png",
 		AltText:  "zee",
 		Info:     app.Info,
+		Request:  getRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -104,6 +107,7 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "captain-kube.png",
 		AltText:  "captain kube",
 		Info:     app.Info,
+		Request:  getRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -114,6 +118,7 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "phippy.png",
 		AltText:  "phippy",
 		Info:     app.Info,
+		Request:  getRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -133,6 +138,14 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 		header.Set("Content-Length", strconv.FormatInt(fileinfo.Size(), 10))
 	}
 	io.Copy(w, image)
+}
+
+func getRequestAsString(r *http.Request) string {
+	buf := new(bytes.Buffer)
+	if err := r.Write(buf); err != nil {
+		return err.Error()
+	}
+	return string(buf.Bytes())
 }
 
 type Server struct {
