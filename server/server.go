@@ -19,8 +19,12 @@ func unimplementedHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	unimplementedHandler(w, r)
-	fmt.Fprintln(w, "Root handler!")
+	v := view.IndexView{
+		Title:   "WhoAmI",
+		Info:    app.Info,
+		Request: getRequestAsString(r),
+	}
+	v.Write(w)
 }
 
 func cpustressHandler(w http.ResponseWriter, r *http.Request) {
