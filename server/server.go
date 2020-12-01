@@ -4,14 +4,13 @@ import (
 	"bytes"
 	"desotech/whoami/app"
 	"desotech/whoami/view"
+	"desotech/whoami/server/util"
 	"fmt"
 	"io"
 	"log"
-	"mime"
 	"net/http"
 	"os"
 	"path/filepath"
-	"strconv"
 )
 
 func unimplementedHandler(w http.ResponseWriter, r *http.Request) {
@@ -134,13 +133,7 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err) // TODO: handle error more gracefully
 	}
 	defer image.Close()
-	if fileinfo, err := image.Stat(); err == nil {
-		extension := filepath.Ext(fileinfo.Name())
-		mimeType := mime.TypeByExtension(extension)
-		header := w.Header()
-		header.Set("Content-Type", mimeType)
-		header.Set("Content-Length", strconv.FormatInt(fileinfo.Size(), 10))
-	}
+	util.AddContentInfoToResponseHeades(w, image)
 	io.Copy(w, image)
 }
 
