@@ -137,6 +137,17 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	io.Copy(w, image)
 }
 
+func cssHandler(w http.ResponseWriter, r *http.Request) {
+	basename := filepath.Base(r.URL.Path)
+	stylesheet, err := os.Open("static/css/" + basename)
+	if err != nil {
+		panic(err)
+	}
+	defer stylesheet.Close()
+	util.AddContentInfoToResponseHeades(w, stylesheet)
+	io.Copy(w, stylesheet)
+}
+
 func getRequestAsString(r *http.Request) string {
 	buf := new(bytes.Buffer)
 	if err := r.Write(buf); err != nil {
@@ -151,7 +162,6 @@ type Server struct {
 
 func (s *Server) Start() {
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/images/", imageHandler)
 	http.HandleFunc("/cpustress", cpustressHandler)
 	http.HandleFunc("/memstress", memstressHandler)
 	http.HandleFunc("/health", healthHandler)
@@ -161,6 +171,9 @@ func (s *Server) Start() {
 	http.HandleFunc("/zee", zeeHandler)
 	http.HandleFunc("/captainkube", captainkubeHandler)
 	http.HandleFunc("/phippy", phippyHandler)
+
+	http.HandleFunc("/images/", imageHandler)
+	http.HandleFunc("/css/", cssHandler)
 
 	address := fmt.Sprintf(":%d", s.Port)
 	log.Fatal(http.ListenAndServe(address, nil))
