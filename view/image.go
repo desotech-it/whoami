@@ -14,7 +14,7 @@ type ImageView struct {
 	Request  string
 }
 
-var templateFiles = []string{
+var imageViewTemplateFiles = []string{
 	"template/image.tmpl",
 	"template/base.tmpl",
 	"template/whoami.tmpl",
@@ -23,6 +23,6 @@ var templateFiles = []string{
 
 func (v *ImageView) Write(w io.Writer) error {
 	// TODO: handle error during template parsing
-	template := template.Must(template.ParseFiles(templateFiles...))
+	template := template.Must(template.ParseFiles(imageViewTemplateFiles...))
 	return template.Execute(w, v)
 }
