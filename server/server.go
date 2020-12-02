@@ -1,7 +1,6 @@
 package server
 
 import (
-	"bytes"
 	"desotech/whoami/app"
 	"desotech/whoami/server/util"
 	"desotech/whoami/view"
@@ -24,7 +23,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	v := view.IndexView{
 		Title:   "WhoAmI",
 		Info:    app.Info,
-		Request: getRequestAsString(r),
+		Request: util.GetRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -103,7 +102,7 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "goldie.png",
 		AltText:  "goldie",
 		Info:     app.Info,
-		Request:  getRequestAsString(r),
+		Request:  util.GetRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -115,7 +114,7 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "zee.png",
 		AltText:  "zee",
 		Info:     app.Info,
-		Request:  getRequestAsString(r),
+		Request:  util.GetRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -127,7 +126,7 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "captain-kube.png",
 		AltText:  "captain kube",
 		Info:     app.Info,
-		Request:  getRequestAsString(r),
+		Request:  util.GetRequestAsString(r),
 	}
 	v.Write(w)
 }
@@ -139,7 +138,7 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 		Filename: "phippy.png",
 		AltText:  "phippy",
 		Info:     app.Info,
-		Request:  getRequestAsString(r),
+		Request:  util.GetRequestAsString(r),
 	}
 	v.Write(w)
 }
