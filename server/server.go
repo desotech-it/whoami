@@ -6,6 +6,7 @@ import (
 	"desotech/whoami/view"
 	"fmt"
 	"log"
+	"os"
 	"net/http"
 	"path/filepath"
 	"time"
@@ -147,14 +148,26 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	basename := filepath.Base(r.URL.Path)
 	path := filepath.Join("static", "images", basename)
-	util.ServeLocalResource(w, path)
+	if err := util.ServeLocalResource(w, path); err != nil {
+		if _, ok := err.(*os.PathError); ok {
+			http.Error(w, "404 - Not found!", http.StatusNotFound)
+		} else {
+			http.Error(w, "Internal server error!", http.StatusInternalServerError)
+		}
+	}
 }
 
 func cssHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	basename := filepath.Base(r.URL.Path)
 	path := filepath.Join("static", "css", basename)
-	util.ServeLocalResource(w, path)
+	if err := util.ServeLocalResource(w, path); err != nil {
+		if _, ok := err.(*os.PathError); ok {
+			http.Error(w, "404 - Not found!", http.StatusNotFound)
+		} else {
+			http.Error(w, "Internal server error!", http.StatusInternalServerError)
+		}
+	}
 }
 
 type Server struct {
