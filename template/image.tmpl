@@ -3,7 +3,7 @@
 {{define "title"}}{{- .Title -}}{{end}}
 
 {{define "main"}}
-<img src="images/{{.Filename}}" alt="{{.AltText}}">
+<img class="border mt-4" src="images/{{.Filename}}" alt="{{.AltText}}">
 {{template "whoami" .Info}}
 {{template "request" .Request}}
 

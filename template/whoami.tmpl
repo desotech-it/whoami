@@ -1,12 +1,21 @@
 {{define "whoami"}}
 <dl>
-	<dt>Hostname</dt>
-	<dd>{{- .Hostname -}}</dd>
-	{{range $interface, $addresses := .Addresses}}
-		{{range $address := $addresses}}
-			<dt>{{ $interface }}</dt>
-			<dd>{{ $address }}</dd>
+	<section class="card mt-2">
+		<h5 class="card-header"><dt class="font-weight-normal">Hostname</dt></h5>
+		<dd class="card-body"><p class="card-text text-monospace">{{- .Hostname -}}</p></dd>
+	</section>
+	<section class="card mt-2">
+		<h5 class="card-header">Interfaces</h5>
+		<ul class="list-group">
+		{{range $interface, $addresses := .Addresses}}
+			{{range $address := $addresses}}
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<dd class="text-monospace">{{ $address }}</dd>
+					<dt class="badge badge-primary badge-pill">{{ $interface }}</dt>
+				</li>
+			{{end}}
 		{{end}}
-	{{end}}
+		</ul>
+	</section>
 </dl>
 {{end}}
