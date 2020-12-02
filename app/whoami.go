@@ -9,23 +9,29 @@ var Info WhoamiInfo
 
 type WhoamiInfo struct {
 	Hostname  string
-	Addresses []string
+	Addresses map[string][]string
 }
 
 func getWhoamiInfo() WhoamiInfo {
 	hostname, _ := os.Hostname()
-	iaddrs, _ := net.InterfaceAddrs()
-	var addresses []string
-	// handle err
-	for _, addr := range iaddrs {
-		addresses = append(addresses, addr.String())
-	}
+	ifaces, _ := net.Interfaces()
 
-	// _, _ = fmt.Fprintln(w, "RemoteAddr:", req.RemoteAddr)
-	// if err := req.Write(w); err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 	return
-	// }
+	addresses := make(map[string][]string)
+
+	for _, iface := range ifaces {
+		ifaceAddrs, _ := iface.Addrs()
+		lenIfaceAddrs := len(ifaceAddrs)
+		_, present := addresses[iface.Name]
+		if (!present) {
+			addresses[iface.Name] = make([]string, lenIfaceAddrs)
+		}
+		addrsList := addresses[iface.Name]
+		i := 0
+		for _, addr := range ifaceAddrs {
+			addrsList[i] = addr.String()
+			i++
+		}
+	}
 
 	return WhoamiInfo{
 		hostname,
