@@ -6,10 +6,8 @@ import (
 	"desotech/whoami/server/util"
 	"desotech/whoami/view"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"time"
 
@@ -149,33 +147,15 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 func imageHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	basename := filepath.Base(r.URL.Path)
-	image, err := os.Open("static/images/" + basename)
-	if err != nil {
-		panic(err) // TODO: handle error more gracefully
-	}
-	defer image.Close()
-	util.AddContentInfoToResponseHeades(w, image)
-	io.Copy(w, image)
+	path := filepath.Join("static", "images", basename)
+	util.ServeLocalResource(w, path)
 }
 
 func cssHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	basename := filepath.Base(r.URL.Path)
-	stylesheet, err := os.Open("static/css/" + basename)
-	if err != nil {
-		panic(err)
-	}
-	defer stylesheet.Close()
-	util.AddContentInfoToResponseHeades(w, stylesheet)
-	io.Copy(w, stylesheet)
-}
-
-func getRequestAsString(r *http.Request) string {
-	buf := new(bytes.Buffer)
-	if err := r.Write(buf); err != nil {
-		return err.Error()
-	}
-	return string(buf.Bytes())
+	path := filepath.Join("static", "css", basename)
+	util.ServeLocalResource(w, path)
 }
 
 type Server struct {

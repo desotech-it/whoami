@@ -1,6 +1,7 @@
 package util
 
 import (
+	"io"
 	"mime"
 	"net/http"
 	"os"
@@ -19,4 +20,18 @@ func AddContentInfoToResponseHeades(w http.ResponseWriter, f *os.File) error {
 	}
 
 	return err
+}
+
+func ServeLocalResource(w http.ResponseWriter, path string) error {
+	file, errOpen := os.Open(path)
+	if errOpen != nil {
+		return errOpen
+	}
+	defer file.Close()
+	if err := AddContentInfoToResponseHeades(w, file); err != nil {
+		return err
+	}
+
+	_, errCopy := io.Copy(w, file)
+	return errCopy
 }
