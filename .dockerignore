@@ -8,3 +8,6 @@
 # Docker stuff
 Dockerfile
 .dockerignore
+
+# Go stuff
+go.sum
