@@ -43,7 +43,13 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func memstressHandler(w http.ResponseWriter, r *http.Request) {
-	unimplementedHandler(w, r)
+	duration, err := time.ParseDuration(r.URL.Query().Get("d"))
+	if err == nil {
+		go util.GenerateHighMemoryUsageFor(duration)
+		http.Redirect(w, r, "/metrics", http.StatusPermanentRedirect)
+		return
+	}
+	http.Error(w, err.Error(), http.StatusBadRequest)
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
