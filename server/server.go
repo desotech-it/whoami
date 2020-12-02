@@ -96,6 +96,11 @@ func livenessHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(json)
 }
 
+func metricsHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
+	promhttp.Handler().ServeHTTP(w, r)
+}
+
 func goldieHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	v := view.ImageView{
@@ -180,7 +185,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/memstress", memstressHandler)
 	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/liveness", livenessHandler)
-	http.Handle("/metrics", promhttp.Handler())
+	http.HandleFunc("/metrics", metricsHandler)
 	http.HandleFunc("/goldie", goldieHandler)
 	http.HandleFunc("/zee", zeeHandler)
 	http.HandleFunc("/captainkube", captainkubeHandler)
