@@ -22,6 +22,7 @@ func unimplementedHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	v := view.IndexView{
 		Title:   "WhoAmI",
 		Info:    app.Info,
@@ -31,6 +32,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func cpustressHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	duration, err := time.ParseDuration(r.URL.Query().Get("d"))
 	if err == nil {
 		go util.GenerateCPULoadFor(duration)
@@ -45,6 +47,7 @@ func memstressHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	health := app.GetHealth()
 	json, err := health.GetJsonResponse()
 
@@ -67,6 +70,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func livenessHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	liveness := app.GetLiveness()
 	json, err := liveness.GetJsonResponse()
 
@@ -89,6 +93,7 @@ func livenessHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func goldieHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	v := view.ImageView{
 		Title:    "Goldie",
 		Filename: "goldie.png",
@@ -100,6 +105,7 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func zeeHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	v := view.ImageView{
 		Title:    "Zee",
 		Filename: "zee.png",
@@ -111,6 +117,7 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	v := view.ImageView{
 		Title:    "Captain Kube",
 		Filename: "captain-kube.png",
@@ -122,6 +129,7 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func phippyHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	v := view.ImageView{
 		Title:    "Phippy",
 		Filename: "phippy.png",
@@ -133,6 +141,7 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func imageHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	basename := filepath.Base(r.URL.Path)
 	image, err := os.Open("static/images/" + basename)
 	if err != nil {
@@ -144,6 +153,7 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func cssHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
 	basename := filepath.Base(r.URL.Path)
 	stylesheet, err := os.Open("static/css/" + basename)
 	if err != nil {
