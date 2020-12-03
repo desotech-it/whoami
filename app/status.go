@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"os"
 )
 
 const (
@@ -16,10 +17,46 @@ type Health int
 type Liveness int
 
 func GetHealth() Health {
+	healthValue := os.Getenv("WHOAMI_HEALTH_STATUS")
+
+	if healthValue == "STARTING" {
+		return STARTING
+	}
+
+	if healthValue == "STOPPING" {
+		return STOPPING
+	}
+
+	if healthValue == "DOWN" {
+		return DOWN
+	}
+
+	if healthValue == "ERRORED" {
+		return ERRORED
+	}
+
 	return UP
 }
 
 func GetLiveness() Liveness {
+	livenessValue := os.Getenv("WHOAMI_LIVENESS_STATUS")
+
+	if livenessValue == "STARTING" {
+		return STARTING
+	}
+
+	if livenessValue == "STOPPING" {
+		return STOPPING
+	}
+
+	if livenessValue == "DOWN" {
+		return DOWN
+	}
+
+	if livenessValue == "ERRORED" {
+		return ERRORED
+	}
+
 	return UP
 }
 
