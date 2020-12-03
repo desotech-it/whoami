@@ -4,10 +4,11 @@ import (
 	"desotech/whoami/app"
 	"desotech/whoami/server/util"
 	"desotech/whoami/view"
+	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"net/http"
+	"os"
 	"path/filepath"
 	"time"
 
@@ -31,12 +32,18 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
+
+	stats := app.CPUInfo()
+	v := view.CPUStressView{
+		Title: "CPU Load",
+		Stats: stats,
+	}
+	v.Write(w)
+
 	duration, err := time.ParseDuration(r.URL.Query().Get("d"))
 	if err == nil {
 		go util.GenerateCPULoadFor(duration)
-		return
 	}
-	http.Error(w, err.Error(), http.StatusBadRequest)
 }
 
 func memstressHandler(w http.ResponseWriter, r *http.Request) {
@@ -173,6 +180,12 @@ func cssHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func cpuusageHandler(w http.ResponseWriter, _ *http.Request) {
+	cpusUsage := app.CPULoad()
+	bytes, _ := json.Marshal(cpusUsage)
+	w.Write(bytes)
+}
+
 type Server struct {
 	Port uint64
 }
@@ -191,6 +204,8 @@ func (s *Server) Start() {
 
 	http.HandleFunc("/images/", imageHandler)
 	http.HandleFunc("/css/", cssHandler)
+
+	http.HandleFunc("/cpuusage", cpuusageHandler)
 
 	address := fmt.Sprintf(":%d", s.Port)
 	log.Fatal(http.ListenAndServe(address, nil))

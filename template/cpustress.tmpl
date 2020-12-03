@@ -1,0 +1,62 @@
+{{template "base" .}}
+
+{{define "title"}}{{- .Title -}}{{end}}
+
+{{define "main"}}
+	<section class="card mt-2">
+		<h5 class="card-header">{{- .Title -}}</h5>
+		<div class="card-body">
+		<ul class="list-group-flush p-0">
+		{{range $index, $curr := .Stats}}
+		{{$load := $curr.Load | printf "%.0f"}}
+			<li class="list-group-item d-flex justify-content-between flex-column p-4">
+				<div class="d-flex justify-content-between"><h5>{{$curr.Name}}</h5><p class="badge badge-primary badge-pill">CPU #{{$index}}</p></div>
+				<div class="progress" style="height: 3em;">
+					<div
+						id="slider-cpu-{{$index}}"
+						class="progress-bar bg-success slider-cpu"
+						role="progressbar"
+						style="width: {{$load}}%; font-size: 1.6em;"
+						aria-valuenow="{{$load}}"
+						aria-valuemin="0"
+						aria-valuemax="100">{{$load}}%</div>
+				</div>
+			</li>
+		{{end}}
+		</ul>
+		</div>
+	</section>
+	<script type="text/javascript">
+		const sliders = document.querySelectorAll('.slider-cpu');
+
+		function changeColorByValue(element, value) {
+			let newClass = 'bg-success';
+			if (value >= 50) {
+				if (value >= 75) {
+					newClass = 'bg-danger';
+				} else {
+					newClass = 'bg-warning';
+				}
+			}
+			element.className = element.className.replace(/bg-(?:success|warning|danger)/, newClass);
+		}
+
+		function processUsageStats(usageStats) {
+			sliders.forEach((current, index) => {
+				const value = usageStats[index].toFixed(0);
+				const percentageValue = value + '%';
+				changeColorByValue(current, value);
+				current.style.width = percentageValue;
+				current.innerText = percentageValue;
+			});
+		}
+
+		function updateSliders() {
+			fetch(`${location.origin}/cpuusage`)
+				.then(body => body.json())
+				.then(usageStats => processUsageStats(usageStats));
+		}
+
+		setInterval(updateSliders, 600);
+	</script>
+{{end}}
