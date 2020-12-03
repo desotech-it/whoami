@@ -4,6 +4,7 @@
 
 # Built executable
 *.exe
+/whoami
 
 # Docker stuff
 Dockerfile
