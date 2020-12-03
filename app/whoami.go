@@ -22,7 +22,7 @@ func getWhoamiInfo() WhoamiInfo {
 		ifaceAddrs, _ := iface.Addrs()
 		lenIfaceAddrs := len(ifaceAddrs)
 		_, present := addresses[iface.Name]
-		if (!present) {
+		if !present {
 			addresses[iface.Name] = make([]string, lenIfaceAddrs)
 		}
 		addrsList := addresses[iface.Name]

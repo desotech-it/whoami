@@ -13,8 +13,8 @@ func init() {
 
 func LogRequest(r *http.Request) {
 	logrus.WithFields(logrus.Fields{
-		"method": r.Method,
+		"method":         r.Method,
 		"remote_address": r.RemoteAddr,
-		"resource": r.RequestURI,
+		"resource":       r.RequestURI,
 	}).Infof("Handling %s request for %s from %s", r.Method, r.RequestURI, r.RemoteAddr)
 }
