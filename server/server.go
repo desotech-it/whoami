@@ -16,10 +16,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-func unimplementedHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Sorry, this endpoint is not implemented yet.")
-}
-
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	v := view.IndexView{
