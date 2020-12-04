@@ -3,7 +3,9 @@
 {{define "title"}}{{- .Title -}}{{end}}
 
 {{define "main"}}
-<img class="border mt-4" src="/static/images/{{.Filename}}" alt="{{.AltText}}">
+<div class="d-flex justify-content-center">
+	<img class="border mt-4" src="/static/images/{{.Filename}}" alt="{{.AltText}}">
+</div>
 {{template "whoami" .Info}}
 {{template "request" .Request}}
 
