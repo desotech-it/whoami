@@ -1,0 +1,23 @@
+{{template "base" .}}
+
+{{define "title"}}{{- .Title -}}{{end}}
+
+{{define "main"}}
+	{{$percentageUsed := .Stats.PercentageUsed | printf "%.0f"}}
+	<section class="card mt-2">
+		<h5 class="card-header">{{- .Title -}}</h5>
+		<div class="card-body">
+			<div class="progress" style="height: 3em;">
+				<div
+					id="slider-memory"
+					class="progress-bar bg-success slider-cpu"
+					role="progressbar"
+					style="width: {{$percentageUsed}}%; font-size: 1.6em;"
+					aria-valuenow="{{$percentageUsed}}"
+					aria-valuemin="0"
+					aria-valuemax="100">{{.Stats.UsedMemory}}/{{.Stats.AvailableMemory}}</div>
+			</div>
+		</div>
+	</section>
+	<script src="/static/js/memstress.js" type="text/javascript"></script>
+{{end}}

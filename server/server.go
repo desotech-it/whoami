@@ -42,12 +42,19 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func memstressHandler(w http.ResponseWriter, r *http.Request) {
+	app.LogRequest(r)
+
+	stats := app.MemInfo()
+	v := view.MemStressView{
+		Title: "Memory Usage",
+		Stats: stats,
+	}
+	v.Write(w)
+
 	duration, err := time.ParseDuration(r.URL.Query().Get("d"))
 	if err == nil {
 		go util.GenerateHighMemoryUsageFor(duration)
-		return
 	}
-	http.Error(w, err.Error(), http.StatusBadRequest)
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -166,6 +173,12 @@ func cpuusageHandler(w http.ResponseWriter, _ *http.Request) {
 	w.Write(bytes)
 }
 
+func memusageHandler(w http.ResponseWriter, _ *http.Request) {
+	memUsage := app.MemInfo()
+	bytes, _ := json.Marshal(memUsage)
+	w.Write(bytes)
+}
+
 type Server struct {
 	Port uint64
 }
@@ -185,6 +198,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/static/", staticHandler)
 
 	http.HandleFunc("/cpuusage", cpuusageHandler)
+	http.HandleFunc("/memusage", memusageHandler)
 
 	address := fmt.Sprintf(":%d", s.Port)
 	log.Fatal(http.ListenAndServe(address, nil))

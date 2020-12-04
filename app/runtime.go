@@ -4,11 +4,18 @@ import (
 	"errors"
 
 	"github.com/shirou/gopsutil/v3/cpu"
+	"github.com/shirou/gopsutil/v3/mem"
 )
 
 type CPUStats struct {
 	Name string
 	Load float64
+}
+
+type MemStats struct {
+	UsedMemory      uint64  `json:"used_memory"`
+	AvailableMemory uint64  `json:"available_memory"`
+	PercentageUsed  float64 `json:"percentage_used"`
 }
 
 func CPULoad() []float64 {
@@ -32,4 +39,14 @@ func CPUInfo() []CPUStats {
 	}
 
 	return stats
+}
+
+func MemInfo() MemStats {
+	stats, _ := mem.VirtualMemory()
+
+	return MemStats{
+		UsedMemory:      stats.Used,
+		AvailableMemory: stats.Free,
+		PercentageUsed:  stats.UsedPercent,
+	}
 }
