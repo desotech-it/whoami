@@ -9,7 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"time"
 
 	// Prometheus
@@ -150,24 +149,9 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 	v.Write(w)
 }
 
-func imageHandler(w http.ResponseWriter, r *http.Request) {
+func staticHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	basename := filepath.Base(r.URL.Path)
-	path := filepath.Join("static", "images", basename)
-	if err := util.ServeLocalResource(w, path); err != nil {
-		if _, ok := err.(*os.PathError); ok {
-			http.Error(w, "404 - Not found!", http.StatusNotFound)
-		} else {
-			http.Error(w, "Internal server error!", http.StatusInternalServerError)
-		}
-	}
-}
-
-func cssHandler(w http.ResponseWriter, r *http.Request) {
-	app.LogRequest(r)
-	basename := filepath.Base(r.URL.Path)
-	path := filepath.Join("static", "css", basename)
-	if err := util.ServeLocalResource(w, path); err != nil {
+	if err := util.ServeLocalResource(w, r.URL.Path[1:]); err != nil {
 		if _, ok := err.(*os.PathError); ok {
 			http.Error(w, "404 - Not found!", http.StatusNotFound)
 		} else {
@@ -198,8 +182,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/captainkube", captainkubeHandler)
 	http.HandleFunc("/phippy", phippyHandler)
 
-	http.HandleFunc("/images/", imageHandler)
-	http.HandleFunc("/css/", cssHandler)
+	http.HandleFunc("/static/", staticHandler)
 
 	http.HandleFunc("/cpuusage", cpuusageHandler)
 
