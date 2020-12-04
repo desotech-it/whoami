@@ -13,9 +13,9 @@ type CPUStats struct {
 }
 
 type MemStats struct {
-	UsedMemory      uint64  `json:"used_memory"`
-	AvailableMemory uint64  `json:"available_memory"`
-	PercentageUsed  float64 `json:"percentage_used"`
+	UsedMemory     uint64  `json:"used_memory"`
+	TotalMemory    uint64  `json:"total_memory"`
+	PercentageUsed float64 `json:"percentage_used"`
 }
 
 func CPULoad() []float64 {
@@ -45,8 +45,8 @@ func MemInfo() MemStats {
 	stats, _ := mem.VirtualMemory()
 
 	return MemStats{
-		UsedMemory:      stats.Used,
-		AvailableMemory: stats.Free,
-		PercentageUsed:  stats.UsedPercent,
+		UsedMemory:     stats.Used,
+		TotalMemory:    stats.Total,
+		PercentageUsed: stats.UsedPercent,
 	}
 }

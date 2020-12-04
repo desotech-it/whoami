@@ -45,9 +45,9 @@ func logMemoryUsage(interval time.Duration) {
 		<-timer.C
 		memStats := MemInfo()
 		logrus.WithFields(logrus.Fields{
-			"used_memory":      memStats.UsedMemory,
-			"available_memory": memStats.AvailableMemory,
-			"percentage_used":  memStats.PercentageUsed,
+			"used_memory":     memStats.UsedMemory,
+			"total_memory":    memStats.TotalMemory,
+			"percentage_used": memStats.PercentageUsed,
 		}).Info("Logging memory usage")
 	}
 }

@@ -30,7 +30,7 @@ function formatBytes(bytes, decimals = 2) {
 function processMemUsage(memUsage) {
 	const percentageUsed = memUsage.percentage_used.toFixed(0);
 	const percentageUsedString = percentageUsed + '%';
-	const ratio = formatBytes(memUsage.used_memory) + '/' + formatBytes(memUsage.available_memory);
+	const ratio = formatBytes(memUsage.used_memory) + '/' + formatBytes(memUsage.total_memory);
 	slider.style.width = percentageUsedString;
 	slider.innerText = ratio;
 	slider.setAttribute('aria-valuenow', percentageUsed);
