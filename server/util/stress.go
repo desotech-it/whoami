@@ -40,7 +40,7 @@ func GenerateHighMemoryUsageFor(d time.Duration) {
 			case <-done:
 				return
 			default:
-				memblock = append(memblock, make([]byte, 1024*1024))
+				memblock = append(memblock, make([]byte, 1024*1024*16))
 				rand.Read(memblock[i])
 				time.Sleep(interval)
 			}
