@@ -19,6 +19,7 @@ function processUsageStats(usageStats) {
 		changeColorByValue(current, value);
 		current.style.width = percentageValue;
 		current.innerText = percentageValue;
+		current.setAttribute('aria-valuenow', value);
 	});
 }
 
