@@ -22,7 +22,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		Info:    app.Info,
 		Request: util.GetRequestAsString(r),
 	}
-	v.Write(w)
+	if util.IsFromCurl(r) {
+		v.WriteAsText(w)
+	} else {
+		v.Write(w)
+	}
 }
 
 func cpustressHandler(w http.ResponseWriter, r *http.Request) {

@@ -2,6 +2,7 @@ package view
 
 import (
 	"desotech/whoami/app"
+	"desotech/whoami/view/util"
 	"html/template"
 	"io"
 )
@@ -23,4 +24,8 @@ func (v *IndexView) Write(w io.Writer) error {
 	// TODO: handle error during template parsing
 	template := template.Must(template.ParseFiles(indexViewTemplateFiles...))
 	return template.Execute(w, v)
+}
+
+func (v *IndexView) WriteAsText(w io.Writer) {
+	util.WriteWhoamiInfoAsText(w, v.Info, v.Request)
 }
