@@ -9,6 +9,17 @@
 		<title>{{template "title" .}}</title>
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/">WhoAmI</a>
+			<div class="navbar-nav">
+				<a class="nav-link active" href="/cpustress">CPU Stress</a>
+				<a class="nav-link" href="/memstress">Mem Stress</a>
+				<a class="nav-link" href="/captainkube">Captain Kube</a>
+				<a class="nav-link" href="/goldie">Goldie</a>
+				<a class="nav-link" href="/phippy">Phippy</a>
+				<a class="nav-link" href="/zee">Zee</a>
+			</div>
+		</nav>
 		<main class="container mb-4">
 			{{template "main" .}}
 		</main>
