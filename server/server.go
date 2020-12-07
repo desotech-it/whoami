@@ -187,8 +187,28 @@ type Server struct {
 	Port uint64
 }
 
+func assignRootHandler() {
+	targetImage := os.Getenv("NAME_APPLICATION")
+	var targetHandler func(http.ResponseWriter, *http.Request)
+
+	switch targetImage {
+	case "goldie":
+		targetHandler = goldieHandler
+	case "zee":
+		targetHandler = zeeHandler
+	case "captainkube":
+		targetHandler = captainkubeHandler
+	case "phippy":
+		targetHandler = phippyHandler
+	default:
+		targetHandler = rootHandler
+	}
+
+	http.HandleFunc("/", targetHandler)
+}
+
 func (s *Server) Start() {
-	http.HandleFunc("/", rootHandler)
+	assignRootHandler()
 	http.HandleFunc("/cpustress", cpustressHandler)
 	http.HandleFunc("/memstress", memstressHandler)
 	http.HandleFunc("/health", healthHandler)
