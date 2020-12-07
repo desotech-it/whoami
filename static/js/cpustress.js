@@ -30,3 +30,15 @@ function updateSliders() {
 }
 
 setInterval(updateSliders, 500);
+
+const startButton = document.querySelector('#start-button');
+const magnitudeField = document.querySelector('#magnitude');
+const unitField = document.querySelector('#unit');
+
+startButton.addEventListener('click', e => {
+	e.preventDefault();
+	fetch('/cpustress', {
+		method: 'POST',
+		body: new URLSearchParams(`magnitude=${magnitudeField.value}&unit=${unitField.value}`),
+	}).catch(console.err);
+});

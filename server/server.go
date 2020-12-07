@@ -32,16 +32,25 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 
-	stats := app.CPUInfo()
-	v := view.CPUStressView{
-		Title: "CPU Load",
-		Stats: stats,
-	}
-	v.Write(w)
-
-	duration, err := time.ParseDuration(r.URL.Query().Get("d"))
-	if err == nil {
-		go util.GenerateCPULoadFor(duration)
+	switch r.Method {
+	case "GET":
+		stats := app.CPUInfo()
+		v := view.CPUStressView{
+			Title: "CPU Load",
+			Stats: stats,
+		}
+		v.Write(w)
+	case "POST":
+		r.ParseForm()
+		form := r.Form
+		magnitude := form.Get("magnitude")
+		unit := form.Get("unit")
+		duration, err := time.ParseDuration(magnitude + unit)
+		if err == nil {
+			go util.GenerateCPULoadFor(duration)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }
 
