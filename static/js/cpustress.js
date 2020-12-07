@@ -29,4 +29,4 @@ function updateSliders() {
 	.then(usageStats => processUsageStats(usageStats));
 }
 
-setInterval(updateSliders, 600);
+setInterval(updateSliders, 500);
