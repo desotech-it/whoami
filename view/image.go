@@ -2,6 +2,7 @@ package view
 
 import (
 	"desotech/whoami/app"
+	"desotech/whoami/view/util"
 	"html/template"
 	"io"
 )
@@ -25,4 +26,9 @@ func (v *ImageView) Write(w io.Writer) error {
 	// TODO: handle error during template parsing
 	template := template.Must(template.ParseFiles(imageViewTemplateFiles...))
 	return template.Execute(w, v)
+}
+
+func (v *ImageView) WriteAsPlainText(w io.Writer) {
+	util.WriteImageAsText(w, v.Filename)
+	util.WriteWhoamiInfoAsText(w, v.Info, v.Request)
 }

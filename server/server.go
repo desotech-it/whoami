@@ -121,7 +121,11 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 		Info:     app.Info,
 		Request:  util.GetRequestAsString(r),
 	}
-	v.Write(w)
+	if util.IsFromCurl(r) {
+		v.WriteAsPlainText(w)
+	} else {
+		v.Write(w)
+	}
 }
 
 func zeeHandler(w http.ResponseWriter, r *http.Request) {
@@ -133,7 +137,11 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 		Info:     app.Info,
 		Request:  util.GetRequestAsString(r),
 	}
-	v.Write(w)
+	if util.IsFromCurl(r) {
+		v.WriteAsPlainText(w)
+	} else {
+		v.Write(w)
+	}
 }
 
 func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
@@ -145,7 +153,11 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 		Info:     app.Info,
 		Request:  util.GetRequestAsString(r),
 	}
-	v.Write(w)
+	if util.IsFromCurl(r) {
+		v.WriteAsPlainText(w)
+	} else {
+		v.Write(w)
+	}
 }
 
 func phippyHandler(w http.ResponseWriter, r *http.Request) {
@@ -157,7 +169,11 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 		Info:     app.Info,
 		Request:  util.GetRequestAsString(r),
 	}
-	v.Write(w)
+	if util.IsFromCurl(r) {
+		v.WriteAsPlainText(w)
+	} else {
+		v.Write(w)
+	}
 }
 
 func staticHandler(w http.ResponseWriter, r *http.Request) {
