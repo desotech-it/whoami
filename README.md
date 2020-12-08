@@ -24,5 +24,5 @@ Possible values: `goldie`, `zee`, `captainkube`, `phippy`.
 
 > (*) The value of those variables is fed to [time.ParseDuration](https://pkg.go.dev/time#ParseDuration) so any value accepted by that function is also accepted by those environment variables.
 
-###### License
+#### License
 This code is published under the terms of the MIT license. As long as you credit us, you're free to use this code for any purpose you like!
