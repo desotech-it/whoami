@@ -1,3 +1,7 @@
+<div align="center">
+	<img alt="Desotech logo" style="max-width: 400px;" src=".github/images/desotech.png">
+</div>
+
 # Whoami
 
 Whoami is an app developed to demo the capabilities of Kubernetes. It provides endpoints to stress-test and get information on the running system.
