@@ -73,47 +73,33 @@ func memstressHandler(w http.ResponseWriter, r *http.Request) {
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 	health := app.GetHealth()
-	json, err := health.GetJsonResponse()
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	var status string
+	if health == 200 {
+		status = "UP"
+	} else {
+		status = "ERRORED"
 	}
-
-	if health == app.STOPPING || health == app.DOWN {
-		http.Error(w, string(json), http.StatusServiceUnavailable)
-		return
+	v := view.HealthView{
+		Status: status,
 	}
-
-	if health == app.ERRORED {
-		http.Error(w, string(json), http.StatusInternalServerError)
-		return
-	}
-
-	w.Write(json)
+	w.WriteHeader(health)
+	v.Write(w)
 }
 
-func livenessHandler(w http.ResponseWriter, r *http.Request) {
+func readinessHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	liveness := app.GetLiveness()
-	json, err := liveness.GetJsonResponse()
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	readiness := app.GetReadiness()
+	var status string
+	if readiness == 200 {
+		status = "UP"
+	} else {
+		status = "STARTING"
 	}
-
-	if liveness == app.DOWN {
-		http.Error(w, string(json), http.StatusServiceUnavailable)
-		return
+	v := view.ReadinessView{
+		Status: status,
 	}
-
-	if liveness == app.ERRORED {
-		http.Error(w, string(json), http.StatusInternalServerError)
-		return
-	}
-
-	w.Write(json)
+	w.WriteHeader(readiness)
+	v.Write(w)
 }
 
 func metricsHandler(w http.ResponseWriter, r *http.Request) {
@@ -236,8 +222,8 @@ func (s *Server) Start() {
 	assignRootHandler()
 	http.HandleFunc("/cpustress", cpustressHandler)
 	http.HandleFunc("/memstress", memstressHandler)
-	http.HandleFunc("/health", healthHandler)
-	http.HandleFunc("/liveness", livenessHandler)
+	http.HandleFunc("/readiness", readinessHandler)
+	http.HandleFunc("/healthz", healthHandler)
 	http.HandleFunc("/metrics", metricsHandler)
 	http.HandleFunc("/goldie", goldieHandler)
 	http.HandleFunc("/zee", zeeHandler)
