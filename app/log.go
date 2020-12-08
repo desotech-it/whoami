@@ -11,7 +11,7 @@ func init() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	logrus.SetOutput(os.Stdout)
 
-	logInterval, err := time.ParseDuration(os.Getenv("WHOAMI_LOG_INTERVAL"))
+	logInterval, err := time.ParseDuration(os.Getenv("LOG_INTERVAL"))
 	if err != nil {
 		logInterval = 2 * time.Second
 	}
