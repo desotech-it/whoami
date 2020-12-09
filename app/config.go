@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	Port       uint64
+	Port uint64
 }
 
 var port = flag.Uint64("port", 8080, "")
