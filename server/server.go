@@ -4,7 +4,6 @@ import (
 	"desotech/whoami/app"
 	"desotech/whoami/server/util"
 	"desotech/whoami/view"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -172,14 +171,12 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 
 func cpuusageHandler(w http.ResponseWriter, _ *http.Request) {
 	cpusUsage := app.CPULoad()
-	bytes, _ := json.Marshal(cpusUsage)
-	w.Write(bytes)
+	util.WriteJSONResponse(w, cpusUsage)
 }
 
 func memusageHandler(w http.ResponseWriter, _ *http.Request) {
 	memUsage := app.MemInfo()
-	bytes, _ := json.Marshal(memUsage)
-	w.Write(bytes)
+	util.WriteJSONResponse(w, memUsage)
 }
 
 type Server struct {
