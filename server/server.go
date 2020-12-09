@@ -11,7 +11,6 @@ import (
 	"os"
 	"time"
 
-	// Prometheus
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -171,17 +170,6 @@ func phippyHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func staticHandler(w http.ResponseWriter, r *http.Request) {
-	app.LogRequest(r)
-	if err := util.ServeLocalResource(w, r.URL.Path[1:]); err != nil {
-		if _, ok := err.(*os.PathError); ok {
-			http.Error(w, "404 - Not found!", http.StatusNotFound)
-		} else {
-			http.Error(w, "Internal server error!", http.StatusInternalServerError)
-		}
-	}
-}
-
 func cpuusageHandler(w http.ResponseWriter, _ *http.Request) {
 	cpusUsage := app.CPULoad()
 	bytes, _ := json.Marshal(cpusUsage)
@@ -230,7 +218,7 @@ func (s *Server) Start() {
 	http.HandleFunc("/captainkube", captainkubeHandler)
 	http.HandleFunc("/phippy", phippyHandler)
 
-	http.HandleFunc("/static/", staticHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	http.HandleFunc("/cpuusage", cpuusageHandler)
 	http.HandleFunc("/memusage", memusageHandler)
