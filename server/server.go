@@ -55,16 +55,25 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 func memstressHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
 
-	stats := app.MemInfo()
-	v := view.MemStressView{
-		Title: "Memory Usage",
-		Stats: stats,
-	}
-	v.Write(w)
-
-	duration, err := time.ParseDuration(r.URL.Query().Get("d"))
-	if err == nil {
-		go util.GenerateHighMemoryUsageFor(duration)
+	switch r.Method {
+	case "GET":
+		stats := app.MemInfo()
+		v := view.MemStressView{
+			Title: "Memory Usage",
+			Stats: stats,
+		}
+		v.Write(w)
+	case "POST":
+		r.ParseForm()
+		form := r.Form
+		magnitude := form.Get("magnitude")
+		unit := form.Get("unit")
+		duration, err := time.ParseDuration(magnitude + unit)
+		if err == nil {
+			go util.GenerateHighMemoryUsageFor(duration)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }
 
