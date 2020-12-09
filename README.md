@@ -1,5 +1,5 @@
 <div align="center">
-	<img alt="Desotech logo" style="max-width: 400px;" src=".github/images/desotech.png">
+	<img alt="Desotech logo" style="max-width: 400px;" src="static/images/desotech.png">
 </div>
 
 # Whoami

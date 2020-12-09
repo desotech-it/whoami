@@ -11,3 +11,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
 	-moz-appearance: textfield;
 }
+
+#desotech-logo {
+	max-width: 3em;
+}

@@ -1,6 +1,6 @@
 {{define "base"}}
 <!DOCTYPE HTML>
-<html>
+<html class="vh-100">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,21 +8,29 @@
 		<link rel="stylesheet" href="/static/css/whoami.css">
 		<title>{{template "title" .}}</title>
 	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="/">WhoAmI</a>
-			<div class="navbar-nav">
-				<a class="nav-link active" href="/cpustress">CPU Stress</a>
-				<a class="nav-link" href="/memstress">Mem Stress</a>
-				<a class="nav-link" href="/captainkube">Captain Kube</a>
-				<a class="nav-link" href="/goldie">Goldie</a>
-				<a class="nav-link" href="/phippy">Phippy</a>
-				<a class="nav-link" href="/zee">Zee</a>
-			</div>
-		</nav>
-		<main class="container mb-4">
-			{{template "main" .}}
-		</main>
+	<body class="vh-100">
+		<wrapper class="d-flex flex-column vh-100">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="/">WhoAmI</a>
+				<div class="navbar-nav">
+					<a class="nav-link active" href="/cpustress">CPU Stress</a>
+					<a class="nav-link" href="/memstress">Mem Stress</a>
+					<a class="nav-link" href="/captainkube">Captain Kube</a>
+					<a class="nav-link" href="/goldie">Goldie</a>
+					<a class="nav-link" href="/phippy">Phippy</a>
+					<a class="nav-link" href="/zee">Zee</a>
+				</div>
+			</nav>
+			<main class="container mb-4 flex-fill">
+				{{template "main" .}}
+			</main>
+			<footer class="footer bg-light p-2">
+				<div class="container d-flex justify-content-center align-items-center">
+					<img src="/static/images/desotech.png" id="desotech-logo">
+					<p class="ml-4 text-muted">&#169;2020 Desotech</p>
+				</div>
+			</footer>
+		</wrapper>
 	</body>
 </html>
 {{end}}
