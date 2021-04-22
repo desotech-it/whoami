@@ -1,6 +1,7 @@
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - v*
 
 jobs:
   release-linux-amd64:
@@ -10,6 +11,10 @@ jobs:
       GO_VERSION: 1.16.3
     steps:
     - uses: actions/checkout@v2
+    - uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: false
     - uses: wangyoucao577/go-release-action@v1.14
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
