@@ -31,6 +31,7 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string) {
 	{
 		requestNoCarriageReturn := strings.ReplaceAll(request, "\r\n", "\n")
 		table := tablewriter.NewWriter(w)
+		table.SetAutoWrapText(false)
 		table.SetHeader([]string{"Request"})
 		table.Append([]string{requestNoCarriageReturn})
 		table.Render()
