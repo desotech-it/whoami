@@ -10,18 +10,20 @@ jobs:
     env:
       GO_VERSION: 1.16.3
     steps:
-    - uses: actions/checkout@v2
-    - uses: marvinpinto/action-automatic-releases@v1
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        prerelease: false
-    - uses: wangyoucao577/go-release-action@v1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: linux
-        goarch: amd64
-        goversion: https://dl.google.com/go/go${{ env.GO_VERSION }}.linux-amd64.tar.gz
-        extra_files: static template LICENSE
-        md5sum: false
-        sha256sum: true
-        overwrite: true
+      - uses: actions/checkout@v2
+
+      - uses: marvinpinto/action-automatic-releases@v1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+
+      - uses: wangyoucao577/go-release-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: linux
+          goarch: amd64
+          goversion: https://dl.google.com/go/go${{ env.GO_VERSION }}.linux-amd64.tar.gz
+          extra_files: static template LICENSE
+          md5sum: false
+          sha256sum: true
+          overwrite: true
