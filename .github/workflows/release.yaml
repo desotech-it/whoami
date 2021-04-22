@@ -11,11 +11,11 @@ jobs:
       GO_VERSION: 1.16.3
     steps:
     - uses: actions/checkout@v2
-    - uses: marvinpinto/action-automatic-releases@latest
+    - uses: marvinpinto/action-automatic-releases@v1
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: false
-    - uses: wangyoucao577/go-release-action@v1.14
+    - uses: wangyoucao577/go-release-action@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: linux
