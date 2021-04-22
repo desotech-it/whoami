@@ -22,6 +22,6 @@ COPY --from=builder /go/whoami/whoami    /whoami/
 
 WORKDIR /whoami
 
-ENTRYPOINT ["/whoami/whoami", "-p", "80"]
+ENTRYPOINT ["./whoami", "-p", "80"]
 
 EXPOSE 80
