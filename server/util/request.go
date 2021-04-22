@@ -1,17 +1,18 @@
 package util
 
 import (
-	"bytes"
 	"net/http"
+	"net/http/httputil"
 	"strings"
+	"bytes"
 )
 
 func GetRequestAsString(r *http.Request) string {
-	buf := new(bytes.Buffer)
-	if err := r.Write(buf); err != nil {
+	responseBytes, err := httputil.DumpRequest(r, false)
+	if err != nil {
 		return err.Error()
 	}
-	return string(buf.Bytes())
+	return string(bytes.TrimSpace(responseBytes))
 }
 
 func IsFromCurl(r *http.Request) bool {
