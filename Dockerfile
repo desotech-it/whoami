@@ -1,8 +1,9 @@
-FROM golang:1-alpine as builder
+FROM golang:1 as builder
 
-RUN apk --no-cache --no-progress add ca-certificates \
-        && update-ca-certificates \
-        && rm -rf /var/cache/apk/*
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    update-ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /go/whoami
 
