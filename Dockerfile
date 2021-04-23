@@ -4,6 +4,8 @@ WORKDIR /go/whoami
 
 COPY . .
 
+ENV CGO_ENABLED=0
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     update-ca-certificates && \
