@@ -10,14 +10,17 @@ jobs:
     env:
       GO_VERSION: 1.16.3
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v2
 
-      - uses: marvinpinto/action-automatic-releases@v1
+      - name: Publish GitHub release
+        uses: marvinpinto/action-automatic-releases@v1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
 
-      - uses: wangyoucao577/go-release-action@v1
+      - name: Upload release assets
+        uses: wangyoucao577/go-release-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: linux
