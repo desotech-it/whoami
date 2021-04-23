@@ -1,15 +1,14 @@
 FROM golang:1 as builder
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    update-ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
-
 WORKDIR /go/whoami
 
 COPY . .
 
-RUN go build -tags netgo -ldflags '-extldflags "-static"'
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    update-ca-certificates && \
+    rm -rf /var/lib/apt/lists/* && \
+    go build -tags netgo -ldflags '-extldflags "-static"'
 
 # Create a minimal container to run a Golang static binary
 FROM scratch
