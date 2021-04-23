@@ -1,0 +1,83 @@
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod tidy
+builds:
+- env:
+    - CGO_ENABLED=0
+  goos:
+    - linux
+    - darwin
+  goarch:
+    - amd64
+    - arm64
+  goarm:
+    - 7
+  mod_timestamp: '{{ .CommitTimestamp }}'
+  flags:
+    - -trimpath
+  ldflags:
+    - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
+archives:
+- id: '{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  wrap_in_directory: '{{ .ProjectName }}'
+  files:
+    - LICENSE
+    - static/*
+    - template/*
+dockers:
+  - goos: linux
+    goarch: amd64
+
+    # Templates of the Docker image names.
+    image_templates:
+      - "r.deso.tech/whoami/{{ .ProjectName }}:latest"
+      - "r.deso.tech/whoami/{{ .ProjectName }}:latest-amd64"
+      - "r.deso.tech/whoami/{{ .ProjectName }}:{{ .Version }}-amd64"
+
+    # Skips the docker push. Could be useful if you also do draft releases.
+    # If set to auto, the release will not be pushed to the docker repository
+    # in case there is an indicator for prerelease in the tag e.g. v1.0.0-rc1
+    skip_push: auto
+
+    # Path to the Dockerfile (from the project root).
+    dockerfile: Dockerfile
+
+    # Whether to use `docker buildx build` instead of `docker build`.
+    # You probably want to set it to true when using flags like `--platform`.
+    # If true, will also add `--load` to the build flags.
+    # Defaults to false.
+    use_buildx: true
+
+    # Template of the docker build flags.
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--platform=linux/amd64"
+
+    extra_files:
+      - app
+      - go.mod
+      - go.sum
+      - main.go
+      - server
+      - static
+      - template
+      - view
+checksum:
+  name_template: checksums.txt
+snapshot:
+  name_template: '{{ .ProjectName }}-SNAPSHOPT-{{ .ShortCommit }}'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - Merge pull request
+      - Merge branch
+      - go mod tidy
