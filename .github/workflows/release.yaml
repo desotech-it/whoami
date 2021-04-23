@@ -22,7 +22,7 @@ jobs:
           prerelease: false
 
       - name: Upload release assets
-        uses: wangyoucao577/go-release-action@v1
+        uses: wangyoucao577/go-release-action@v1.17
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: linux
