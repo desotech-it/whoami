@@ -15,3 +15,7 @@ input[type=number] {
 #desotech-logo {
 	max-width: 3em;
 }
+
+#unsupported-platform-alert {
+	margin: 16px;
+}

@@ -2,6 +2,7 @@ package app
 
 import (
 	"errors"
+	"runtime"
 
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/mem"
@@ -49,4 +50,8 @@ func MemInfo() MemStats {
 		TotalMemory:    stats.Total,
 		PercentageUsed: stats.UsedPercent,
 	}
+}
+
+func IsOSDarwin() bool {
+	return runtime.GOOS == "darwin"
 }

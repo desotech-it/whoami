@@ -32,6 +32,15 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
+		if app.IsOSDarwin() {
+			v := view.UnsupportedView{
+				Title:   "Unsupported Operation",
+				Message: "Retrieving the CPU info on MacOS is not currently implemented.",
+				Link:    "https://github.com/shirou/gopsutil/issues/1000",
+			}
+			v.Write(w)
+			return
+		}
 		stats := app.CPUInfo()
 		v := view.CPUStressView{
 			Title: "CPU Load",

@@ -1,0 +1,12 @@
+{{template "base" .}}
+
+{{define "title"}}{{- .Title -}}{{end}}
+
+{{define "main"}}
+	<div id="unsupported-platform-alert" class="alert alert-danger" role="alert">
+		<p>{{- .Message -}}</p>
+		{{ $Length := len .Link }} {{ if ne $Length 0 }}
+			<p>Click <a target="_blank" href="{{.Link}}">here</a> for furher info.</p>
+		{{ end }}
+	</div>
+{{end}}
