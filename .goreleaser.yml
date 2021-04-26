@@ -117,6 +117,7 @@ changelog:
       - '^docs:'
       - '^test:'
       - '^ci:'
+      - '^src:'
       - Merge pull request
       - Merge branch
       - go mod tidy
