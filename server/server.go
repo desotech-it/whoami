@@ -1,9 +1,9 @@
 package server
 
 import (
-	"desotech/whoami/app"
-	"desotech/whoami/server/util"
-	"desotech/whoami/view"
+	"github.com/desotech-it/whoami/app"
+	"github.com/desotech-it/whoami/server/util"
+	"github.com/desotech-it/whoami/view"
 	"fmt"
 	"log"
 	"net/http"

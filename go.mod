@@ -1,4 +1,4 @@
-module desotech/whoami
+module github.com/desotech-it/whoami
 
 go 1.15
 

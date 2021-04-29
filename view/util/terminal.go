@@ -1,7 +1,7 @@
 package util
 
 import (
-	"desotech/whoami/app"
+	"github.com/desotech-it/whoami/app"
 	"fmt"
 	"io"
 	"path/filepath"

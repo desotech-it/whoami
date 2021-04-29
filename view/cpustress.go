@@ -1,7 +1,7 @@
 package view
 
 import (
-	"desotech/whoami/app"
+	"github.com/desotech-it/whoami/app"
 	"html/template"
 	"io"
 )

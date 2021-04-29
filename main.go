@@ -1,8 +1,8 @@
 package main
 
 import (
-	"desotech/whoami/app"
-	"desotech/whoami/server"
+	"github.com/desotech-it/whoami/app"
+	"github.com/desotech-it/whoami/server"
 )
 
 func main() {
