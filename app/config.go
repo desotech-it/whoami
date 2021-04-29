@@ -13,10 +13,10 @@ var port = flag.Uint64("port", 8080, "")
 func init() {
 	// short version
 	flag.Uint64Var(port, "p", 8080, "")
+	flag.Parse()
 }
 
 func GetConfig() Config {
-	flag.Parse()
 	return Config{
 		*port,
 	}
