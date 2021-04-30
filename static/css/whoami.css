@@ -19,3 +19,7 @@ input[type=number] {
 #unsupported-platform-alert {
 	margin: 16px;
 }
+
+#github-ribbon:before {
+	background-color: #090;
+}
