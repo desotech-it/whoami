@@ -1,23 +1,29 @@
 package view
 
 import (
-	"github.com/desotech-it/whoami/app"
-	"html/template"
+	"fmt"
 	"io"
+
+	"github.com/desotech-it/whoami/app"
 )
 
-type MemStressView struct {
-	Title string
+type memStressView struct {
+	baseView
 	Stats app.MemStats
 }
 
-var memStressViewTemplateFiles = []string{
-	"template/memstress.tmpl",
-	"template/base.tmpl",
+func NewMemStressView(title string, stats app.MemStats) View {
+	return &memStressView{
+		baseView{title},
+		stats,
+	}
 }
 
-func (v *MemStressView) Write(w io.Writer) error {
-	// TODO: handle error during template parsing
-	template := template.Must(template.ParseFiles(memStressViewTemplateFiles...))
-	return template.Execute(w, v)
+func (v *memStressView) Write(w io.Writer) error {
+	t := memStressTemlate
+	return t.Execute(w, v)
+}
+
+func (v *memStressView) WriteAsText(w io.Writer) {
+	fmt.Fprintf(w, "This feature is not yet implemented for plain-text viewing.")
 }

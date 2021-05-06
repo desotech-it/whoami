@@ -1,23 +1,29 @@
 package view
 
 import (
-	"github.com/desotech-it/whoami/app"
-	"html/template"
+	"fmt"
 	"io"
+
+	"github.com/desotech-it/whoami/app"
 )
 
-type CPUStressView struct {
-	Title string
+type cpuStressView struct {
+	baseView
 	Stats []app.CPUStats
 }
 
-var CPUStressViewTemplateFiles = []string{
-	"template/cpustress.tmpl",
-	"template/base.tmpl",
+func NewCPUStressView(title string, stats []app.CPUStats) View {
+	return &cpuStressView{
+		baseView{title},
+		stats,
+	}
 }
 
-func (v *CPUStressView) Write(w io.Writer) error {
-	// TODO: handle error during template parsing
-	template := template.Must(template.ParseFiles(CPUStressViewTemplateFiles...))
-	return template.Execute(w, v)
+func (v *cpuStressView) Write(w io.Writer) error {
+	t := cpuStressTemplate
+	return t.Execute(w, v)
+}
+
+func (v *cpuStressView) WriteAsText(w io.Writer) {
+	fmt.Fprintln(w, "This feature is not yet implemented for plain-text viewing.")
 }

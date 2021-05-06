@@ -1,4 +1,3 @@
-{{define "base"}}
 <!DOCTYPE HTML>
 <html class="vh-100">
 	<head>
@@ -8,7 +7,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-fork-ribbon-css@0.2.3/gh-fork-ribbon.min.css" integrity="sha384-Z++grmVsACYXFJ172xoe/vafub4oe6aH80lkj48yi2qzVi/g3L371Wh3c00FPqjV" crossorigin="anonymous">
 		<link rel="stylesheet" href="/static/css/whoami.css">
 		<link rel="icon" type="img/png" href="/static/images/favicon.png">
-		<title>{{template "title" .}}</title>
+		<title>{{.Title}}</title>
 	</head>
 	<body class="vh-100">
 		<section class="d-flex flex-column vh-100">
@@ -36,4 +35,3 @@
 		</section>
 	</body>
 </html>
-{{end}}

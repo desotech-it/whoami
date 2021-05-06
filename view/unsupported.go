@@ -1,23 +1,29 @@
 package view
 
 import (
-	"html/template"
+	"fmt"
 	"io"
 )
 
-type UnsupportedView struct {
-	Title   string
+type unsupportedView struct {
+	baseView
 	Message string
 	Link    string
 }
 
-var unsupportedViewTemplateFiles = []string{
-	"template/unsupported.tmpl",
-	"template/base.tmpl",
+func NewUnsupportedView(title string, message string, link string) View {
+	return &unsupportedView{
+		baseView{title},
+		message,
+		link,
+	}
 }
 
-func (v *UnsupportedView) Write(w io.Writer) error {
-	// TODO: handle error during template parsing
-	template := template.Must(template.ParseFiles(unsupportedViewTemplateFiles...))
-	return template.Execute(w, v)
+func (v *unsupportedView) Write(w io.Writer) error {
+	t := unsupportedTemplate
+	return t.Execute(w, v)
+}
+
+func (v *unsupportedView) WriteAsText(w io.Writer) {
+	fmt.Fprintf(w, "%s\nFor futher info check out this link: %s\n", v.Message, v.Link)
 }

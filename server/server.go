@@ -16,11 +16,7 @@ import (
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.IndexView{
-		Title:   "WhoAmI",
-		Info:    app.Info,
-		Request: util.GetRequestAsString(r),
-	}
+	v := view.NewIndexView("WhoAmI", app.Info, util.GetRequestAsString(r))
 	if util.IsFromCurl(r) {
 		v.WriteAsText(w)
 	} else {
@@ -34,19 +30,16 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		if app.IsOSDarwin() {
-			v := view.UnsupportedView{
-				Title:   "Unsupported Operation",
-				Message: "Retrieving the CPU info on MacOS is not currently implemented.",
-				Link:    "https://github.com/shirou/gopsutil/issues/1000",
-			}
+			v := view.NewUnsupportedView(
+				"Unsupported Operation",
+				"Retrieving the CPU info on MacOS is not currently implemented.",
+				"https://github.com/shirou/gopsutil/issues/1000",
+			)
 			v.Write(w)
 			return
 		}
 		stats := app.CPUInfo()
-		v := view.CPUStressView{
-			Title: "CPU Load",
-			Stats: stats,
-		}
+		v := view.NewCPUStressView("CPU Load", stats)
 		v.Write(w)
 	case "POST":
 		r.ParseForm()
@@ -68,10 +61,7 @@ func memstressHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		stats := app.MemInfo()
-		v := view.MemStressView{
-			Title: "Memory Usage",
-			Stats: stats,
-		}
+		v := view.NewMemStressView("Memory Usage", stats)
 		v.Write(w)
 	case "POST":
 		r.ParseForm()
@@ -126,15 +116,9 @@ func metricsHandler(w http.ResponseWriter, r *http.Request) {
 
 func goldieHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.ImageView{
-		Title:    "Goldie",
-		Filename: "goldie.png",
-		AltText:  "goldie",
-		Info:     app.Info,
-		Request:  util.GetRequestAsString(r),
-	}
+	v := view.NewImageView("Goldie", "goldie.png", "goldie", app.Info, util.GetRequestAsString(r))
 	if util.IsFromCurl(r) {
-		v.WriteAsPlainText(w)
+		v.WriteAsText(w)
 	} else {
 		v.Write(w)
 	}
@@ -142,15 +126,9 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 
 func zeeHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.ImageView{
-		Title:    "Zee",
-		Filename: "zee.png",
-		AltText:  "zee",
-		Info:     app.Info,
-		Request:  util.GetRequestAsString(r),
-	}
+	v := view.NewImageView("Zee", "zee.png", "zee", app.Info, util.GetRequestAsString(r))
 	if util.IsFromCurl(r) {
-		v.WriteAsPlainText(w)
+		v.WriteAsText(w)
 	} else {
 		v.Write(w)
 	}
@@ -158,15 +136,9 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 
 func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.ImageView{
-		Title:    "Captain Kube",
-		Filename: "captain-kube.png",
-		AltText:  "captain kube",
-		Info:     app.Info,
-		Request:  util.GetRequestAsString(r),
-	}
+	v := view.NewImageView("Captain Kube", "captain-kube.png", "captain kube", app.Info, util.GetRequestAsString(r))
 	if util.IsFromCurl(r) {
-		v.WriteAsPlainText(w)
+		v.WriteAsText(w)
 	} else {
 		v.Write(w)
 	}
@@ -174,15 +146,9 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 
 func phippyHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.ImageView{
-		Title:    "Phippy",
-		Filename: "phippy.png",
-		AltText:  "phippy",
-		Info:     app.Info,
-		Request:  util.GetRequestAsString(r),
-	}
+	v := view.NewImageView("Phippy", "phippy.png", "phippy", app.Info, util.GetRequestAsString(r))
 	if util.IsFromCurl(r) {
-		v.WriteAsPlainText(w)
+		v.WriteAsText(w)
 	} else {
 		v.Write(w)
 	}
