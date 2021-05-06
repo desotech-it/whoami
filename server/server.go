@@ -1,14 +1,15 @@
 package server
 
 import (
-	"github.com/desotech-it/whoami/app"
-	"github.com/desotech-it/whoami/server/util"
-	"github.com/desotech-it/whoami/view"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/desotech-it/whoami/app"
+	"github.com/desotech-it/whoami/server/util"
+	"github.com/desotech-it/whoami/view"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )

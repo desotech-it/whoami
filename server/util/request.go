@@ -1,10 +1,10 @@
 package util
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httputil"
 	"strings"
-	"bytes"
 )
 
 func GetRequestAsString(r *http.Request) string {
