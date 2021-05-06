@@ -2,9 +2,11 @@ package view
 
 import (
 	"html/template"
+	"sync"
 )
 
 var (
+	once                sync.Once
 	baseTemplate        *template.Template
 	indexTemplate       *template.Template
 	imageTemplate       *template.Template
@@ -28,5 +30,5 @@ func parseAllTemplates() {
 }
 
 func init() {
-	parseAllTemplates()
+	once.Do(parseAllTemplates)
 }
