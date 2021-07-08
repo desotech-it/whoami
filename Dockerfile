@@ -1,4 +1,4 @@
-FROM golang:1 as builder
+FROM golang:1-alpine as builder
 
 WORKDIR /go/whoami
 
@@ -6,14 +6,14 @@ COPY . .
 
 ENV CGO_ENABLED=0
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    update-ca-certificates && \
-    rm -rf /var/lib/apt/lists/* && \
+RUN apk update --no-cache && \
+    apk upgrade --no-cache && \
+    apk add --no-cache --update ca-certificates && \
+    rm -rf /var/cache/apk* && \
     go build -tags netgo -ldflags '-extldflags "-static"'
 
 # Create a minimal container to run a Golang static binary
-FROM scratch
+FROM alpine
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
@@ -22,6 +22,8 @@ COPY --from=builder /go/whoami/static/   /whoami/static/
 COPY --from=builder /go/whoami/whoami    /whoami/
 
 WORKDIR /whoami
+
+RUN touch readiness
 
 ENTRYPOINT ["./whoami", "-p", "80"]
 
