@@ -25,17 +25,25 @@ func CPULoad() []float64 {
 }
 
 func CPUInfo() []CPUStats {
-	info, _ := cpu.Info()
-	load, _ := cpu.Percent(0, true)
-
-	stats := make([]CPUStats, len(info))
-
-	if len(info) != len(load) {
-		panic(errors.New("mismatch in CPU count between two methods"))
+	info, err := cpu.Info()
+	if err != nil {
+		panic(errors.New("unable to retrieve CPU info"))
 	}
 
-	for i, cpuInfo := range info {
-		stats[i].Name = cpuInfo.ModelName
+	if len(info) == 0 {
+		panic(errors.New("CPU info is an empty list"))
+	}
+
+	load, err := cpu.Percent(0, true)
+	if err != nil {
+		panic(errors.New("unable to retrieve CPU load"))
+	}
+
+	stats := make([]CPUStats, len(load))
+	cpuModelName := info[0].ModelName
+
+	for i := range load {
+		stats[i].Name = cpuModelName
 		stats[i].Load = load[i]
 	}
 
