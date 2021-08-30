@@ -27,6 +27,9 @@ archives:
     - LICENSE
     - static/*
     - template/*
+  format_overrides:
+    - goos: windows
+      format: zip
 dockers:
   - goos: linux
     goarch: amd64
