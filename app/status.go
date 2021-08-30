@@ -58,12 +58,6 @@ func init() {
 		<-healthTimer.C
 		isHealthy = true
 	}()
-
-	go func() {
-		readinessTimer := time.NewTimer(readinessDelay)
-		<-readinessTimer.C
-		isReady = true
-	}()
 }
 
 func GetHealth() int {
