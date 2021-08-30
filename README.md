@@ -30,7 +30,8 @@ endpoints to stress-test and get information on the running system.
 
 ## Environment
 - `LOG_INTERVAL`: controls how often the app logs CPU and memory usage to the
-  console\* (example: `10s` for 10 seconds);
+  console\* (example: `10s` for 10 seconds). A non-positive value disables
+  logging entirely;
 - `READINESS_DELAY`: controls how long it'll take for the app to report itself
   as ready to handle new incoming requests (15 seconds by default)\* (example:
   `1m` for one minute);

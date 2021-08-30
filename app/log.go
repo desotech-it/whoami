@@ -11,13 +11,19 @@ func init() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	logrus.SetOutput(os.Stdout)
 
-	logInterval, err := time.ParseDuration(os.Getenv("LOG_INTERVAL"))
-	if err != nil {
-		logInterval = 2 * time.Second
+	logInterval := 2 * time.Second
+	if maybeNewLogInterval, ok := os.LookupEnv("LOG_INTERVAL"); ok {
+		if newLogInterval, err := ParseDuration(maybeNewLogInterval); err != nil {
+			logInterval = newLogInterval
+		} else {
+			LogWarn.Warnf("failed to parse value for LOG_INTERVAL: %v. Defaulting to %v.", err, logInterval)
+		}
 	}
 
-	go logCPUUsage(logInterval)
-	go logMemoryUsage(logInterval)
+	if logInterval > 0 {
+		go logCPUUsage(logInterval)
+		go logMemoryUsage(logInterval)
+	}
 }
 
 func LogRequest(r *http.Request) {
