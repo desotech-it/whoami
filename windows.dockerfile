@@ -1,4 +1,4 @@
-FROM golang:1-nanoserver as builder
+FROM golang:1.17-nanoserver-1809 as builder
 
 WORKDIR C:\\whoami
 
