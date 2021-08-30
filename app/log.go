@@ -13,7 +13,7 @@ func init() {
 
 	logInterval := 2 * time.Second
 	if maybeNewLogInterval, ok := os.LookupEnv("LOG_INTERVAL"); ok {
-		if newLogInterval, err := ParseDuration(maybeNewLogInterval); err != nil {
+		if newLogInterval, err := ParseDuration(maybeNewLogInterval); err == nil {
 			logInterval = newLogInterval
 		} else {
 			LogWarn.Warnf("failed to parse value for LOG_INTERVAL: %v. Defaulting to %v.", err, logInterval)

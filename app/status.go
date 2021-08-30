@@ -23,7 +23,7 @@ var (
 func init() {
 	readinessDelay := 15 * time.Second
 	if maybeNewReadinessDelay, ok := os.LookupEnv("READINESS_DELAY"); ok {
-		if newReadinessDelay, err := ParseDuration(maybeNewReadinessDelay); err != nil {
+		if newReadinessDelay, err := ParseDuration(maybeNewReadinessDelay); err == nil {
 			if newReadinessDelay < 0 {
 				LogWarn.Warnf("READINESS_DELAY cannot be a negative value. Defaulting to %v. You passed: %v.", readinessDelay, maybeNewReadinessDelay)
 			} else {
@@ -42,7 +42,7 @@ func init() {
 
 	healthDelay := time.Duration(0)
 	if maybeNewHealthDelay, ok := os.LookupEnv("HEALTH_DELAY"); ok {
-		if newHealthDelay, err := ParseDuration(maybeNewHealthDelay); err != nil {
+		if newHealthDelay, err := ParseDuration(maybeNewHealthDelay); err == nil {
 			if newHealthDelay < 0 {
 				LogWarn.Warnf("HEALTH_DELAY cannot be a negative value. Defaulting to %v. You passed: %v.", healthDelay, maybeNewHealthDelay)
 			} else {
