@@ -3,5 +3,6 @@
 .DS_Store
 tmp/
 /whoami
-dist/
+/dist/
+/bin/
 /__debug_bin
