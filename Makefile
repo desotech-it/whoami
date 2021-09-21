@@ -4,7 +4,8 @@ GOFMT ?= gofmt
 PACKAGE := $(shell $(GOCMD) list)
 NAME := $(notdir $(PACKAGE))
 FULLCOMMIT := $(shell git rev-parse HEAD)
-VERSION := $(shell git describe --long --dirty)
+TAG := $(shell git describe --long --dirty)
+VERSION := $(TAG:v%=%)
 BUILD_VERSION := $(subst -,.,$(VERSION))
 
 GOOS := $(shell $(GOCMD) env GOOS)
