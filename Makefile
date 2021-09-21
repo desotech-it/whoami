@@ -100,14 +100,14 @@ docker-windows:
 
 .PHONY: docker-shared
 docker-shared:
-	docker create manifest '$(DOCKER_IMAGE):$(VERSION)' \
+	docker manifest create '$(DOCKER_IMAGE):$(VERSION)' \
 		'$(DOCKER_IMAGE):amd64-$(VERSION)' \
 		'$(DOCKER_IMAGE):arm64v8-$(VERSION)' \
 		'$(DOCKER_IMAGE):$(VERSION)-windowsservercore'
-	docker create push '$(DOCKER_IMAGE):$(VERSION)'
+	docker manifest push '$(DOCKER_IMAGE):$(VERSION)'
 
-	docker create manifest '$(DOCKER_IMAGE):latest' \
+	docker manifest create '$(DOCKER_IMAGE):latest' \
 		'$(DOCKER_IMAGE):amd64' \
 		'$(DOCKER_IMAGE):arm64v8' \
 		'$(DOCKER_IMAGE):windowsservercore'
-	docker create push '$(DOCKER_IMAGE):latest'
+	docker manifest push '$(DOCKER_IMAGE):latest'
