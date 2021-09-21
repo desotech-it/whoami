@@ -89,13 +89,8 @@ fmt:
 
 .PHONY: docker-linux
 docker-linux:
-	docker build --platform linux/amd64 -t '$(DOCKER_IMAGE):amd64-$(VERSION)' -t '$(DOCKER_IMAGE):amd64' .
-	docker build --platform linux/arm64/v8 -t '$(DOCKER_IMAGE):arm64v8-$(VERSION)' \
-		-t '$(DOCKER_IMAGE):arm64v8' .
-	docker push '$(DOCKER_IMAGE):amd64-$(VERSION)'
-	docker push '$(DOCKER_IMAGE):amd64'
-	docker push '$(DOCKER_IMAGE):arm64v8-$(VERSION)'
-	docker push '$(DOCKER_IMAGE):arm64v8'
+	docker buildx build --push --platform linux/amd64 -t '$(DOCKER_IMAGE):amd64-$(VERSION)' -t '$(DOCKER_IMAGE):amd64' .
+	docker buildx build --push --platform linux/arm64/v8 -t '$(DOCKER_IMAGE):arm64v8-$(VERSION)' -t '$(DOCKER_IMAGE):arm64v8' .
 
 .PHONY: docker-windows
 docker-windows:
