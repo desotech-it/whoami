@@ -6,8 +6,8 @@ on:
       - v*
 
 jobs:
-  release:
-    name: Release
+  github-release:
+    name: Publish GitHub Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -20,19 +20,19 @@ jobs:
         with:
           go-version: '~1.17'
 
-      - name: make xcompress
+      - name: Cross compile & archive release artifacts
         run: make xcompress
 
-      - name: Release
+      - name: Publish release
         uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: dist/*
 
   docker-windows:
-    name: Push Windows images
+    name: Push Windows Images
     runs-on: windows-latest
-    needs: release
+    needs: github-release
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
@@ -42,20 +42,20 @@ jobs:
       - name: Install GNU make
         run: choco install make
 
-      - name: Login to Container Registry
+      - name: Login to container registry
         uses: docker/login-action@v1
         with:
           registry: r.deso.tech
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build & Push Docker images
+      - name: Build & push docker images
         run: make docker-windows
 
   docker-linux:
     name: Push Linux images
     runs-on: ubuntu-latest
-    needs: release
+    needs: github-release
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
@@ -72,7 +72,7 @@ jobs:
         with:
           install: true
 
-      - name: Login to Container Registry
+      - name: Login to container registry
         uses: docker/login-action@v1
         with:
           registry: r.deso.tech
@@ -92,12 +92,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Login to Container Registry
+      - name: Login to container registry
         uses: docker/login-action@v1
         with:
           registry: r.deso.tech
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build & Push Manifest Lists
+      - name: Build & push manifest lists
         run: make docker-shared
