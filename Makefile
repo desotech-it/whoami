@@ -99,8 +99,7 @@ docker-linux:
 
 .PHONY: docker-windows
 docker-windows:
-	docker build --platform linux/amd64 -t '$(DOCKER_IMAGE):$(VERSION)-windowsservercore' \
-		-t '$(DOCKER_IMAGE):windowsservercore' -f windows.dockerfile .
+	docker build -t '$(DOCKER_IMAGE):$(VERSION)-windowsservercore' -t '$(DOCKER_IMAGE):windowsservercore' -f windows.dockerfile .
 	docker push '$(DOCKER_IMAGE):$(VERSION)-windowsservercore'
 	docker push '$(DOCKER_IMAGE):windowsservercore'
 
