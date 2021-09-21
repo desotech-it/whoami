@@ -19,6 +19,10 @@ OUTPUT_LINK = $(NAME)$(GOEXE)
 OUTPUT_BIN_DIR = bin
 OUTPUT_DIST_DIR = dist
 
+DOCKER_REGISTRY ?= r.deso.tech
+DOCKER_PROJECT ?= whoami
+DOCKER_IMAGE := $(DOCKER_REGISTRY)/$(DOCKER_PROJECT)/$(NAME)
+
 ifeq ($(GOOS), windows)
 	ARCHIVE_EXT := .zip
 else
@@ -82,3 +86,34 @@ clean:
 .PHONY: fmt
 fmt:
 	$(GOFMT) -s -w .
+
+.PHONY: docker-linux
+docker-linux:
+	docker build --platform linux/amd64 -t '$(DOCKER_IMAGE):amd64-$(VERSION)' -t '$(DOCKER_IMAGE):amd64' .
+	docker build --platform linux/arm64/v8 -t '$(DOCKER_IMAGE):arm64v8-$(VERSION)' \
+		-t '$(DOCKER_IMAGE):arm64v8' .
+	docker push '$(DOCKER_IMAGE):amd64-$(VERSION)'
+	docker push '$(DOCKER_IMAGE):amd64'
+	docker push '$(DOCKER_IMAGE):arm64v8-$(VERSION)'
+	docker push '$(DOCKER_IMAGE):arm64v8'
+
+.PHONY: docker-windows
+docker-windows:
+	docker build --platform linux/amd64 -t '$(DOCKER_IMAGE):$(VERSION)-windowsservercore' \
+		-t '$(DOCKER_IMAGE):windowsservercore' -f windows.dockerfile .
+	docker push '$(DOCKER_IMAGE):$(VERSION)-windowsservercore'
+	docker push '$(DOCKER_IMAGE):windowsservercore'
+
+.PHONY: docker-shared
+docker-shared:
+	docker create manifest '$(DOCKER_IMAGE):$(VERSION)' \
+		'$(DOCKER_IMAGE):amd64-$(VERSION)' \
+		'$(DOCKER_IMAGE):arm64v8-$(VERSION)' \
+		'$(DOCKER_IMAGE):$(VERSION)-windowsservercore'
+	docker create push '$(DOCKER_IMAGE):$(VERSION)'
+
+	docker create manifest '$(DOCKER_IMAGE):latest' \
+		'$(DOCKER_IMAGE):amd64' \
+		'$(DOCKER_IMAGE):arm64v8' \
+		'$(DOCKER_IMAGE):windowsservercore'
+	docker create push '$(DOCKER_IMAGE):latest'
