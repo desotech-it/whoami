@@ -6,7 +6,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/prometheus/client_golang v1.11.0
 	github.com/qeesung/image2ascii v1.0.1
-	github.com/shirou/gopsutil/v3 v3.21.8
+	github.com/shirou/gopsutil/v3 v3.21.9
 	github.com/sirupsen/logrus v1.8.1
 )
 
