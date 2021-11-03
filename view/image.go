@@ -13,15 +13,17 @@ type imageView struct {
 	AltText  string
 	Info     app.WhoamiInfo
 	Request  string
+	ClientInfo map[string]string
 }
 
-func NewImageView(title string, filename string, altText string, info app.WhoamiInfo, request string) View {
+func NewImageView(title string, filename string, altText string, info app.WhoamiInfo, request string, clientInfo map[string]string) View {
 	return &imageView{
 		baseView{title},
 		filename,
 		altText,
 		info,
 		request,
+		clientInfo,
 	}
 }
 
@@ -32,5 +34,5 @@ func (v *imageView) Write(w io.Writer) error {
 
 func (v *imageView) WriteAsText(w io.Writer) {
 	util.WriteImageAsText(w, v.Filename)
-	util.WriteWhoamiInfoAsText(w, v.Info, v.Request)
+	util.WriteWhoamiInfoAsText(w, v.Info, v.Request, v.ClientInfo)
 }

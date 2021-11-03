@@ -16,7 +16,7 @@ import (
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.NewIndexView("WhoAmI", app.Info, util.GetRequestAsString(r))
+	v := view.NewIndexView("WhoAmI", app.Info, util.GetRequestAsString(r), util.MakeClientInfo(r))
 	if util.IsFromCurl(r) {
 		v.WriteAsText(w)
 	} else {
@@ -116,7 +116,7 @@ func metricsHandler(w http.ResponseWriter, r *http.Request) {
 
 func goldieHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.NewImageView("Goldie", "goldie.png", "goldie", app.Info, util.GetRequestAsString(r))
+	v := view.NewImageView("Goldie", "goldie.png", "goldie", app.Info, util.GetRequestAsString(r), util.MakeClientInfo(r))
 	if util.IsFromCurl(r) {
 		v.WriteAsText(w)
 	} else {
@@ -126,7 +126,7 @@ func goldieHandler(w http.ResponseWriter, r *http.Request) {
 
 func zeeHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.NewImageView("Zee", "zee.png", "zee", app.Info, util.GetRequestAsString(r))
+	v := view.NewImageView("Zee", "zee.png", "zee", app.Info, util.GetRequestAsString(r), util.MakeClientInfo(r))
 	if util.IsFromCurl(r) {
 		v.WriteAsText(w)
 	} else {
@@ -136,7 +136,7 @@ func zeeHandler(w http.ResponseWriter, r *http.Request) {
 
 func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.NewImageView("Captain Kube", "captain-kube.png", "captain kube", app.Info, util.GetRequestAsString(r))
+	v := view.NewImageView("Captain Kube", "captain-kube.png", "captain kube", app.Info, util.GetRequestAsString(r), util.MakeClientInfo(r))
 	if util.IsFromCurl(r) {
 		v.WriteAsText(w)
 	} else {
@@ -146,7 +146,7 @@ func captainkubeHandler(w http.ResponseWriter, r *http.Request) {
 
 func phippyHandler(w http.ResponseWriter, r *http.Request) {
 	app.LogRequest(r)
-	v := view.NewImageView("Phippy", "phippy.png", "phippy", app.Info, util.GetRequestAsString(r))
+	v := view.NewImageView("Phippy", "phippy.png", "phippy", app.Info, util.GetRequestAsString(r), util.MakeClientInfo(r))
 	if util.IsFromCurl(r) {
 		v.WriteAsText(w)
 	} else {

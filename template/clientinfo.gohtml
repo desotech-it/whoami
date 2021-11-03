@@ -1,0 +1,9 @@
+{{define "clientinfo"}}
+<section class="card border mt-4">
+	<h5 class="card-header">Client Info</h5>
+	<pre class="card-body">
+{{ range $key, $value := . }}{{ $key }}={{ $value }}
+{{ end }}
+	</pre>
+</section>
+{{end}}

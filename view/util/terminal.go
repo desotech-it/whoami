@@ -11,7 +11,7 @@ import (
 	"github.com/qeesung/image2ascii/convert"
 )
 
-func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string) {
+func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, clientInfo map[string]string) {
 	{
 		table := tablewriter.NewWriter(w)
 		table.SetHeader([]string{"Hostname"})
@@ -34,6 +34,14 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string) {
 		table.SetAutoWrapText(false)
 		table.SetHeader([]string{"Request"})
 		table.Append([]string{requestNoCarriageReturn})
+		table.Render()
+	}
+	{
+		table := tablewriter.NewWriter(w)
+		table.SetHeader([]string{"Client Info"})
+		for k, v := range(clientInfo) {
+			table.Append([]string{fmt.Sprintf("%s=%s", k, v)})
+		}
 		table.Render()
 	}
 }

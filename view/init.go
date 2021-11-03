@@ -22,8 +22,8 @@ func cloneFromTemplate(src *template.Template, filenames ...string) *template.Te
 
 func parseAllTemplates() {
 	baseTemplate = template.Must(template.ParseFiles("template/base.gohtml"))
-	imageTemplate = cloneFromTemplate(baseTemplate, "template/image.gohtml", "template/whoami.gohtml", "template/request.gohtml")
-	indexTemplate = cloneFromTemplate(baseTemplate, "template/index.gohtml", "template/whoami.gohtml", "template/request.gohtml")
+	imageTemplate = cloneFromTemplate(baseTemplate, "template/image.gohtml", "template/whoami.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
+	indexTemplate = cloneFromTemplate(baseTemplate, "template/index.gohtml", "template/whoami.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
 	cpuStressTemplate = cloneFromTemplate(baseTemplate, "template/cpustress.gohtml")
 	unsupportedTemplate = cloneFromTemplate(baseTemplate, "template/unsupported.gohtml")
 	memStressTemlate = cloneFromTemplate(baseTemplate, "template/memstress.gohtml")
