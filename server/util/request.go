@@ -17,12 +17,12 @@ func GetRequestAsString(r *http.Request) string {
 
 func MakeClientInfo(r *http.Request) map[string]string {
 	return map[string]string{
-		"client_address": removePortFromRawAddr(r.RemoteAddr),
-		"command": r.Method,
-		"real_path": r.URL.EscapedPath(),
-		"query": r.URL.Query().Encode(),
-		"version": r.Proto,
-		"request_uri": r.RequestURI,
+		"client_address": strings.TrimSpace(removePortFromRawAddr(r.RemoteAddr)),
+		"command": strings.TrimSpace(r.Method),
+		"real_path": strings.TrimSpace(r.URL.EscapedPath()),
+		"query": strings.TrimSpace(r.URL.Query().Encode()),
+		"version": strings.TrimSpace(r.Proto),
+		"request_uri": strings.TrimSpace(r.RequestURI),
 	}
 }
 
