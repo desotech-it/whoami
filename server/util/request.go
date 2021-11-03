@@ -8,11 +8,11 @@ import (
 )
 
 func GetRequestAsString(r *http.Request) string {
-	responseBytes, err := httputil.DumpRequest(r, false)
+	requestBytes, err := httputil.DumpRequest(r, false)
 	if err != nil {
 		return err.Error()
 	}
-	return string(bytes.TrimSpace(responseBytes))
+	return string(bytes.TrimSpace(requestBytes))
 }
 
 func IsFromCurl(r *http.Request) bool {
