@@ -1,8 +1,8 @@
 package util
 
 import (
-	"github.com/desotech-it/whoami/app"
 	"fmt"
+	"github.com/desotech-it/whoami/app"
 	"io"
 	"path/filepath"
 	"strings"
@@ -39,7 +39,7 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, cli
 	{
 		table := tablewriter.NewWriter(w)
 		table.SetHeader([]string{"Client Info"})
-		for k, v := range(clientInfo) {
+		for k, v := range clientInfo {
 			table.Append([]string{fmt.Sprintf("%s=%s", k, v)})
 		}
 		table.Render()

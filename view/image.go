@@ -9,10 +9,10 @@ import (
 
 type imageView struct {
 	baseView
-	Filename string
-	AltText  string
-	Info     app.WhoamiInfo
-	Request  string
+	Filename   string
+	AltText    string
+	Info       app.WhoamiInfo
+	Request    string
 	ClientInfo map[string]string
 }
 

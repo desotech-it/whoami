@@ -12,12 +12,11 @@ var isHealthy bool = false
 
 var (
 	LogWarn = &logrus.Logger{
-		Out: os.Stderr,
+		Out:       os.Stderr,
 		Formatter: new(logrus.TextFormatter),
-		Hooks: make(logrus.LevelHooks),
-		Level: logrus.WarnLevel,
+		Hooks:     make(logrus.LevelHooks),
+		Level:     logrus.WarnLevel,
 	}
-
 )
 
 func init() {

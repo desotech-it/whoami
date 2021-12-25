@@ -9,8 +9,8 @@ import (
 
 type indexView struct {
 	baseView
-	Info    app.WhoamiInfo
-	Request string
+	Info       app.WhoamiInfo
+	Request    string
 	ClientInfo map[string]string
 }
 

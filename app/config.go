@@ -8,8 +8,8 @@ import (
 
 var (
 	version string
-	commit string
-	date string
+	commit  string
+	date    string
 )
 
 type Config struct {
