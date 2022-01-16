@@ -1,0 +1,74 @@
+version: '3.9'
+
+services:
+  app:
+    image: whoami:dev
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    init: true
+    ports:
+      - '127.0.0.1:8080:8080'
+    networks:
+      - whoami
+    volumes:
+      - .:/app/src
+      - gopkg:/go/pkg
+    entrypoint:
+      - go
+      - run
+      - .
+
+  dbg:
+    image: whoami:dev
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    cap_add:
+      - SYS_PTRACE
+    init: true
+    ports:
+      - '127.0.0.1:5000:5000'
+      - '127.0.0.1:8080:8080'
+    networks:
+      - whoami
+    volumes:
+      - .:/app/src
+      - gopkg:/go/pkg
+    entrypoint:
+      - dlv
+      - --listen=:5000
+      - --headless=true
+      - --api-version=2
+      - --accept-multiclient
+      - debug
+      - --build-flags='-ldflags="
+        -X github.com/desotech-it/whoami/version.version=v1.2.3
+        -X github.com/desotech-it/whoami/version.fullCommit=deadbeef
+        -X github.com/desotech-it/whoami/version.buildDate=2021-12-25"'
+      - .
+      - --
+    profiles:
+      - dbg
+
+  tests:
+    image: whoami:dev
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    init: true
+    networks:
+      - whoami
+    volumes:
+      - .:/app/src:ro
+      - gopkg:/go/pkg
+    entrypoint: go test ./...
+    profiles:
+      - tests
+
+networks:
+  whoami: {}
+
+volumes:
+  gopkg:
+    name: gopkg
