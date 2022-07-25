@@ -7,7 +7,7 @@ require (
 	github.com/prometheus/client_golang v1.11.0
 	github.com/qeesung/image2ascii v1.0.1
 	github.com/shirou/gopsutil/v3 v3.21.10
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.0
 )
 
 require (
@@ -28,6 +28,6 @@ require (
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	github.com/tklauser/numcpus v0.3.0 // indirect
 	github.com/wayneashleyberry/terminal-dimensions v1.0.0 // indirect
-	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	google.golang.org/protobuf v1.26.0-rc.1 // indirect
 )
