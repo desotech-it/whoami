@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine as builder
+FROM golang:1.26-alpine AS builder
 
 WORKDIR /whoami
 
@@ -8,12 +8,12 @@ ENV CGO_ENABLED=0
 
 RUN apk update --no-cache && \
     apk upgrade --no-cache && \
-    apk add --no-cache --update ca-certificates make git && \
+    apk add --no-cache ca-certificates make git && \
     rm -rf /var/cache/apk* && \
     make build
 
 # Create a minimal container to run a Golang static binary
-FROM alpine
+FROM alpine:3.21
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 

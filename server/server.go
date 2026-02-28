@@ -38,7 +38,11 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 			v.Write(w)
 			return
 		}
-		stats := app.CPUInfo()
+		stats, err := app.CPUInfo()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 		v := view.NewCPUStressView("CPU Load", stats)
 		v.Write(w)
 	case "POST":

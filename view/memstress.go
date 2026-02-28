@@ -20,7 +20,7 @@ func NewMemStressView(title string, stats app.MemStats) View {
 }
 
 func (v *memStressView) Write(w io.Writer) error {
-	t := memStressTemlate
+	t := memStressTemplate
 	return t.Execute(w, v)
 }
 
