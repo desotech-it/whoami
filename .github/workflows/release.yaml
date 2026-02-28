@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -19,7 +19,7 @@ jobs:
         run: choco install make
 
       - name: Login to container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: r.deso.tech
           username: ${{ secrets.REGISTRY_USERNAME }}
@@ -33,22 +33,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
 
       - name: Install buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
         with:
           install: true
 
       - name: Login to container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: r.deso.tech
           username: ${{ secrets.REGISTRY_USERNAME }}
@@ -63,12 +63,12 @@ jobs:
     needs: [docker-windows, docker-linux]
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Login to container registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: r.deso.tech
           username: ${{ secrets.REGISTRY_USERNAME }}
@@ -83,20 +83,20 @@ jobs:
     needs: docker-shared
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
-          go-version: '~1.17'
+          go-version: '~1.26'
 
       - name: Cross compile & archive release artifacts
         run: make xcompress
 
       - name: Publish release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: dist/*

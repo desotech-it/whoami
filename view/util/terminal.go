@@ -1,26 +1,27 @@
 package util
 
 import (
-	"github.com/desotech-it/whoami/app"
 	"fmt"
 	"io"
 	"path/filepath"
 	"strings"
 
+	"github.com/desotech-it/whoami/app"
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/tw"
 	"github.com/qeesung/image2ascii/convert"
 )
 
 func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, clientInfo map[string]string) {
 	{
-		table := tablewriter.NewWriter(w)
-		table.SetHeader([]string{"Hostname"})
+		table := tablewriter.NewTable(w)
+		table.Header("Hostname")
 		table.Append([]string{info.Hostname})
 		table.Render()
 	}
 	{
-		table := tablewriter.NewWriter(w)
-		table.SetHeader([]string{"IP", "Interface"})
+		table := tablewriter.NewTable(w)
+		table.Header("IP", "Interface")
 		for iface, addrs := range info.Addresses {
 			for _, addr := range addrs {
 				table.Append([]string{addr, iface})
@@ -30,16 +31,23 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, cli
 	}
 	{
 		requestNoCarriageReturn := strings.ReplaceAll(request, "\r\n", "\n")
-		table := tablewriter.NewWriter(w)
-		table.SetAutoWrapText(false)
-		table.SetHeader([]string{"Request"})
+		table := tablewriter.NewTable(w,
+			tablewriter.WithConfig(tablewriter.Config{
+				Row: tw.CellConfig{
+					Formatting: tw.CellFormatting{
+						AutoWrap: tw.WrapNone,
+					},
+				},
+			}),
+		)
+		table.Header("Request")
 		table.Append([]string{requestNoCarriageReturn})
 		table.Render()
 	}
 	{
-		table := tablewriter.NewWriter(w)
-		table.SetHeader([]string{"Client Info"})
-		for k, v := range(clientInfo) {
+		table := tablewriter.NewTable(w)
+		table.Header("Client Info")
+		for k, v := range clientInfo {
 			table.Append([]string{fmt.Sprintf("%s=%s", k, v)})
 		}
 		table.Render()

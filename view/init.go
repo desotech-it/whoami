@@ -12,7 +12,7 @@ var (
 	imageTemplate       *template.Template
 	cpuStressTemplate   *template.Template
 	unsupportedTemplate *template.Template
-	memStressTemlate    *template.Template
+	memStressTemplate    *template.Template
 )
 
 func cloneFromTemplate(src *template.Template, filenames ...string) *template.Template {
@@ -26,7 +26,7 @@ func parseAllTemplates() {
 	indexTemplate = cloneFromTemplate(baseTemplate, "template/index.gohtml", "template/whoami.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
 	cpuStressTemplate = cloneFromTemplate(baseTemplate, "template/cpustress.gohtml")
 	unsupportedTemplate = cloneFromTemplate(baseTemplate, "template/unsupported.gohtml")
-	memStressTemlate = cloneFromTemplate(baseTemplate, "template/memstress.gohtml")
+	memStressTemplate = cloneFromTemplate(baseTemplate, "template/memstress.gohtml")
 }
 
 func init() {
