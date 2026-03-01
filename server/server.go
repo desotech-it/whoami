@@ -422,6 +422,16 @@ func (s *Server) Start() {
 		}
 	}()
 
+	// Env-triggered stress tests
+	if d := app.GetCPUStressDuration(); d > 0 {
+		log.Printf("CPU_STRESS=%v: starting CPU stress", d)
+		go util.GenerateCPULoadFor(d)
+	}
+	if d := app.GetMemStressDuration(); d > 0 {
+		log.Printf("MEM_STRESS=%v: starting memory stress", d)
+		go util.GenerateHighMemoryUsageFor(d)
+	}
+
 	<-ctx.Done()
 	log.Println("Shutdown signal received")
 
