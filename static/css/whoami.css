@@ -12,14 +12,76 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
+/* Logo */
 #desotech-logo {
 	max-width: 3em;
 }
 
+/* Unsupported platform */
 #unsupported-platform-alert {
 	margin: 16px;
 }
 
+/* GitHub ribbon */
 #github-ribbon:before {
-	background-color: #090;
+	background-color: #28a745;
+}
+
+/* Hostname value */
+.hostname-value {
+	font-size: 1.5rem;
+	color: #007bff;
+	font-weight: 600;
+	word-break: break-all;
+}
+
+/* HTTP Request pre block */
+.request-pre {
+	padding: 1rem 1.25rem;
+	margin: 0;
+	background-color: #f8f9fa;
+	font-size: 0.85rem;
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Client Info table */
+.client-info-key {
+	width: 1%;
+	background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Card styling */
+.card {
+	transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Badge styling in network interfaces */
+.badge-success {
+	font-size: 0.85rem;
+}
+
+/* Navbar brand styling */
+.navbar-brand svg {
+	opacity: 0.9;
+}
+
+/* Footer styling */
+footer p {
+	font-size: 0.85rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+	.navbar-nav {
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+	.navbar-nav .nav-link {
+		font-size: 0.85rem;
+		padding: 0.25rem 0.5rem !important;
+	}
 }

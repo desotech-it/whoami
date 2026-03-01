@@ -1,5 +1,7 @@
 {{define "main"}}
-{{template "whoami" .Info}}
-{{template "request" .Request}}
-{{template "clientinfo" .ClientInfo}}
+<div class="mt-4">
+	{{template "whoami" .Info}}
+	{{template "request" .Request}}
+	{{template "clientinfo" .ClientInfo}}
+</div>
 {{end}}

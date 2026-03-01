@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/desotech-it/whoami/app"
@@ -13,22 +14,37 @@ import (
 )
 
 func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, clientInfo map[string]string) {
+	// Header banner
+	fmt.Fprintln(w, "=== WhoAmI ===")
+	fmt.Fprintln(w)
+
+	// Hostname section
+	fmt.Fprintf(w, "Hostname: %s\n", info.Hostname)
+	fmt.Fprintln(w)
+
+	// Network Interfaces section
 	{
 		table := tablewriter.NewTable(w)
-		table.Header("Hostname")
-		table.Append([]string{info.Hostname})
-		table.Render()
-	}
-	{
-		table := tablewriter.NewTable(w)
-		table.Header("IP", "Interface")
-		for iface, addrs := range info.Addresses {
+		table.Header("Interface", "Address")
+
+		// Sort interfaces for consistent output
+		ifaces := make([]string, 0, len(info.Addresses))
+		for iface := range info.Addresses {
+			ifaces = append(ifaces, iface)
+		}
+		sort.Strings(ifaces)
+
+		for _, iface := range ifaces {
+			addrs := info.Addresses[iface]
 			for _, addr := range addrs {
-				table.Append([]string{addr, iface})
+				table.Append([]string{iface, addr})
 			}
 		}
 		table.Render()
 	}
+	fmt.Fprintln(w)
+
+	// HTTP Request section
 	{
 		requestNoCarriageReturn := strings.ReplaceAll(request, "\r\n", "\n")
 		table := tablewriter.NewTable(w,
@@ -40,15 +56,26 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, cli
 				},
 			}),
 		)
-		table.Header("Request")
+		table.Header("HTTP Request")
 		table.Append([]string{requestNoCarriageReturn})
 		table.Render()
 	}
+	fmt.Fprintln(w)
+
+	// Client Info section
 	{
 		table := tablewriter.NewTable(w)
-		table.Header("Client Info")
-		for k, v := range clientInfo {
-			table.Append([]string{fmt.Sprintf("%s=%s", k, v)})
+		table.Header("Key", "Value")
+
+		// Sort keys for consistent output
+		keys := make([]string, 0, len(clientInfo))
+		for k := range clientInfo {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+
+		for _, k := range keys {
+			table.Append([]string{k, clientInfo[k]})
 		}
 		table.Render()
 	}

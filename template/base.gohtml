@@ -9,27 +9,33 @@
 		<link rel="icon" type="img/png" href="/static/images/favicon.png">
 		<title>{{.Title}}</title>
 	</head>
-	<body class="vh-100">
+	<body class="vh-100 bg-light">
 		<section class="d-flex flex-column vh-100">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
 				<a id="github-ribbon" class="github-fork-ribbon right-top" href="https://github.com/desotech-it/whoami" data-ribbon="Fork me on GitHub" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
-				<a class="navbar-brand" href="/">WhoAmI</a>
-				<div class="navbar-nav">
-					<a class="nav-link active" href="/cpustress">CPU Stress</a>
-					<a class="nav-link" href="/memstress">Mem Stress</a>
-					<a class="nav-link" href="/captainkube">Captain Kube</a>
-					<a class="nav-link" href="/goldie">Goldie</a>
-					<a class="nav-link" href="/phippy">Phippy</a>
-					<a class="nav-link" href="/zee">Zee</a>
+				<a class="navbar-brand font-weight-bold" href="/">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="d-inline-block align-top mr-1" viewBox="0 0 16 16">
+						<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+						<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+					</svg>
+					WhoAmI
+				</a>
+				<div class="navbar-nav ml-auto flex-row">
+					<a class="nav-link px-2" href="/cpustress">CPU Stress</a>
+					<a class="nav-link px-2" href="/memstress">Mem Stress</a>
+					<a class="nav-link px-2" href="/captainkube">Captain Kube</a>
+					<a class="nav-link px-2" href="/goldie">Goldie</a>
+					<a class="nav-link px-2" href="/phippy">Phippy</a>
+					<a class="nav-link px-2" href="/zee">Zee</a>
 				</div>
 			</nav>
-			<main class="container mb-4 flex-fill">
+			<main class="container py-4 flex-fill">
 				{{template "main" .}}
 			</main>
-			<footer class="footer bg-light p-2">
+			<footer class="footer bg-dark text-light py-3">
 				<div class="container d-flex justify-content-center align-items-center">
-					<img src="/static/images/desotech.png" id="desotech-logo">
-					<p class="ml-4 text-muted">&#169;2020 Desotech</p>
+					<img src="/static/images/desotech.png" id="desotech-logo" alt="Desotech">
+					<p class="ml-3 mb-0 text-muted">&copy; 2020 Desotech</p>
 				</div>
 			</footer>
 		</section>
