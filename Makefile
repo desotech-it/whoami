@@ -23,20 +23,12 @@ DOCKER_REGISTRY ?= r.deso.tech
 DOCKER_PROJECT ?= whoami
 DOCKER_IMAGE := $(DOCKER_REGISTRY)/$(DOCKER_PROJECT)/$(NAME)
 
-ifeq ($(GOOS), windows)
-	ARCHIVE_EXT := .zip
-else
-	ARCHIVE_EXT := .tar.gz
-endif
+ARCHIVE_EXT := .tar.gz
 
 OUTPUT_ARCHIVE=$(BASENAME)$(ARCHIVE_EXT)
 EXTRA_ASSETS := 'static' 'template'
 
-ifeq ($(OS), Windows_NT)
-	include windows.mk
-else
-	include unix.mk
-endif
+include unix.mk
 
 LDFLAGS = $(ADDITIONAL_LDFLAGS) -s -w \
 	-X '$(PACKAGE)/app.version=$(VERSION)' \
@@ -47,12 +39,7 @@ BUILD_FLAGS = -trimpath -ldflags "$(LDFLAGS)" -o '$(OUTPUT_BIN_DIR)/$(OUTPUT_BIN
 
 GOBUILD = $(GOCMD) build $(BUILD_FLAGS)
 
-ifeq ($(ARCHIVE_EXT), .tar.gz)
-	COMPRESSCMD := $(TARGZCMD)
-else
-	COMPRESSCMD := 7z a -bso0 -bsp0 -tzip '$(OUTPUT_DIST_DIR)/$(OUTPUT_ARCHIVE)' $(EXTRA_ASSETS) '$(OUTPUT_BIN_DIR)/$(OUTPUT_BINARY)' ; \
-		7z rn -bso0 -bsp0 '$(OUTPUT_DIST_DIR)/$(OUTPUT_ARCHIVE)' '$(OUTPUT_BIN_DIR)/$(OUTPUT_BINARY)' '$(OUTPUT_LINK)'
-endif
+COMPRESSCMD := $(TARGZCMD)
 
 .DEFAULT_GOAL := link
 
@@ -87,27 +74,10 @@ clean:
 fmt:
 	$(GOFMT) -s -w .
 
-.PHONY: docker-linux
-docker-linux:
-	docker buildx build --push --platform linux/amd64 -t '$(DOCKER_IMAGE):amd64-$(VERSION)' -t '$(DOCKER_IMAGE):amd64' .
-	docker buildx build --push --platform linux/arm64/v8 -t '$(DOCKER_IMAGE):arm64v8-$(VERSION)' -t '$(DOCKER_IMAGE):arm64v8' .
-
-.PHONY: docker-windows
-docker-windows:
-	docker build -t '$(DOCKER_IMAGE):$(VERSION)-windowsservercore' -t '$(DOCKER_IMAGE):windowsservercore' -f windows.dockerfile .
-	docker push '$(DOCKER_IMAGE):$(VERSION)-windowsservercore'
-	docker push '$(DOCKER_IMAGE):windowsservercore'
-
-.PHONY: docker-shared
-docker-shared:
-	docker manifest create '$(DOCKER_IMAGE):$(VERSION)' \
-		'$(DOCKER_IMAGE):amd64-$(VERSION)' \
-		'$(DOCKER_IMAGE):arm64v8-$(VERSION)' \
-		'$(DOCKER_IMAGE):$(VERSION)-windowsservercore'
-	docker manifest push '$(DOCKER_IMAGE):$(VERSION)'
-
-	docker manifest create '$(DOCKER_IMAGE):latest' \
-		'$(DOCKER_IMAGE):amd64' \
-		'$(DOCKER_IMAGE):arm64v8' \
-		'$(DOCKER_IMAGE):windowsservercore'
-	docker manifest push '$(DOCKER_IMAGE):latest'
+.PHONY: docker
+docker:
+	docker buildx build --push \
+		--platform linux/amd64,linux/arm64 \
+		-t '$(DOCKER_IMAGE):$(VERSION)' \
+		-t '$(DOCKER_IMAGE):latest' \
+		.

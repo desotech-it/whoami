@@ -1,0 +1,28 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-success text-white"><strong>Downstream Call</strong></div>
+				<div class="card-body">
+					<form method="GET" action="/downstream" class="form-inline mb-3">
+						<input type="text" name="url" class="form-control mr-2 flex-fill" placeholder="http://other-service/" value="{{if .Result}}{{.Result.URL}}{{end}}">
+						<button type="submit" class="btn btn-success">Call</button>
+					</form>
+					{{if .Result}}
+						{{if .Result.Error}}
+						<div class="alert alert-danger">Error: {{.Result.Error}}</div>
+						{{else}}
+						<p>Status: <strong>{{.Result.StatusCode}}</strong> | Duration: <strong>{{.Result.Duration}}</strong></p>
+						<pre class="request-pre">{{.Result.Body}}</pre>
+						{{end}}
+					{{else}}
+					<p class="text-muted">Enter a URL to make a downstream HTTP call.</p>
+					{{end}}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}

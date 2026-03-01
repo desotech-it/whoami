@@ -1,0 +1,30 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-info text-white">
+					<strong>HTTP Headers</strong>
+					<span class="badge badge-light ml-2">{{len .Headers}}</span>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped table-sm mb-0">
+						<thead><tr><th>Header</th><th>Value</th></tr></thead>
+						<tbody>
+						{{range $name, $values := .Headers}}
+							{{range $value := $values}}
+							<tr>
+								<td class="font-weight-bold text-nowrap"><code>{{$name}}</code></td>
+								<td><code>{{$value}}</code></td>
+							</tr>
+							{{end}}
+						{{end}}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}

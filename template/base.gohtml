@@ -4,32 +4,79 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/static/css/gh-fork-ribbon.min.css">
 		<link rel="stylesheet" href="/static/css/whoami.css">
 		<link rel="icon" type="img/png" href="/static/images/favicon.png">
 		<title>{{.Title}}</title>
 	</head>
-	<body class="vh-100">
+	<body class="vh-100 bg-light">
 		<section class="d-flex flex-column vh-100">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a id="github-ribbon" class="github-fork-ribbon right-top" href="https://github.com/desotech-it/whoami" data-ribbon="Fork me on GitHub" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
-				<a class="navbar-brand" href="/">WhoAmI</a>
-				<div class="navbar-nav">
-					<a class="nav-link active" href="/cpustress">CPU Stress</a>
-					<a class="nav-link" href="/memstress">Mem Stress</a>
-					<a class="nav-link" href="/captainkube">Captain Kube</a>
-					<a class="nav-link" href="/goldie">Goldie</a>
-					<a class="nav-link" href="/phippy">Phippy</a>
-					<a class="nav-link" href="/zee">Zee</a>
+			<nav class="navbar navbar-dark bg-dark shadow-sm">
+				<a class="navbar-brand font-weight-bold d-flex align-items-center" href="/">
+					<img src="/static/images/desolabs-small.png" alt="DesoLabs" class="d-inline-block mr-2" id="navbar-logo">
+					WhoAmI by DesoLabs
+				</a>
+				<div class="navbar-nav ml-auto flex-row flex-wrap">
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">System Info</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/">Host &amp; Network</a>
+							<a class="nav-dropdown-item" href="/env">Environment</a>
+							<a class="nav-dropdown-item" href="/k8s">K8s Metadata</a>
+							<a class="nav-dropdown-item" href="/resources">Resource Limits</a>
+							<a class="nav-dropdown-item" href="/volumes">Volumes</a>
+							<a class="nav-dropdown-item" href="/osinfo">OS &amp; Runtime</a>
+							<a class="nav-dropdown-item" href="/dns">DNS Config</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">HTTP Tools</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/headers">Echo Headers</a>
+							<a class="nav-dropdown-item" href="/status">Status Code</a>
+							<a class="nav-dropdown-item" href="/delay">Response Delay</a>
+							<a class="nav-dropdown-item" href="/counter">Request Counter</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Resilience</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/healthz">Health Probe</a>
+							<a class="nav-dropdown-item" href="/readiness">Readiness Probe</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Networking</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/downstream">Downstream Call</a>
+							<a class="nav-dropdown-item" href="/ws">WebSocket</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Stress Test</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/cpustress">CPU Stress</a>
+							<a class="nav-dropdown-item" href="/memstress">Mem Stress</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Characters</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/captainkube">Captain Kube</a>
+							<a class="nav-dropdown-item" href="/goldie">Goldie</a>
+							<a class="nav-dropdown-item" href="/phippy">Phippy</a>
+							<a class="nav-dropdown-item" href="/zee">Zee</a>
+						</div>
+					</div>
+					<a class="nav-link px-2" href="/docs">Docs</a>
 				</div>
 			</nav>
-			<main class="container mb-4 flex-fill">
+			<main class="container py-4 flex-fill">
 				{{template "main" .}}
 			</main>
-			<footer class="footer bg-light p-2">
+			<footer class="footer bg-dark text-light py-3">
 				<div class="container d-flex justify-content-center align-items-center">
-					<img src="/static/images/desotech.png" id="desotech-logo">
-					<p class="ml-4 text-muted">&#169;2020 Desotech</p>
+					<img src="/static/images/desolabs.png" id="desotech-logo" alt="DesoLabs">
+					<p class="ml-3 mb-0 text-muted">&copy; 2026 DesoLabs by Desotech</p>
 				</div>
 			</footer>
 		</section>

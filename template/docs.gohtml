@@ -1,0 +1,45 @@
+{{define "main"}}
+<div class="mt-4">
+	<h2 class="mb-4">API Reference</h2>
+	{{range .Categories}}
+	<div class="card shadow-sm border-0 mb-3">
+		<div class="card-header bg-{{.Color}} text-white"><strong>{{.Name}}</strong></div>
+		<div class="table-responsive">
+			<table class="table table-sm mb-0">
+				<thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+				<tbody>
+				{{range .Endpoints}}
+					<tr>
+						<td><span class="badge badge-light">{{.Method}}</span></td>
+						<td><a href="{{.Path}}"><code>{{.Path}}{{.Params}}</code></a></td>
+						<td>{{.Description}}</td>
+					</tr>
+				{{end}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{end}}
+	<div class="card shadow-sm border-0 mb-3">
+		<div class="card-header bg-dark text-white"><strong>Environment Variables</strong></div>
+		<div class="table-responsive">
+			<table class="table table-sm mb-0">
+				<thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+				<tbody>
+					<tr><td><code>HEALTH_DELAY</code></td><td>0s</td><td>Delay before liveness probe returns 200</td></tr>
+					<tr><td><code>READINESS_DELAY</code></td><td>15s</td><td>Delay before readiness probe returns 200</td></tr>
+					<tr><td><code>STARTUP_DELAY</code></td><td>0s</td><td>Delay before HTTP server starts listening</td></tr>
+					<tr><td><code>SHUTDOWN_DELAY</code></td><td>0s</td><td>Delay before graceful shutdown completes</td></tr>
+					<tr><td><code>LOG_INTERVAL</code></td><td>2s</td><td>Interval for periodic CPU/memory logging (0 to disable)</td></tr>
+					<tr><td><code>NAME_APPLICATION</code></td><td>(none)</td><td>Set root handler: goldie, zee, captainkube, phippy</td></tr>
+					<tr><td><code>POD_NAME</code></td><td>hostname</td><td>K8s pod name via Downward API</td></tr>
+					<tr><td><code>POD_NAMESPACE</code></td><td>(not set)</td><td>K8s namespace via Downward API</td></tr>
+					<tr><td><code>NODE_NAME</code></td><td>(not set)</td><td>K8s node name via Downward API</td></tr>
+					<tr><td><code>POD_IP</code></td><td>(not set)</td><td>K8s pod IP via Downward API</td></tr>
+					<tr><td><code>SERVICE_ACCOUNT</code></td><td>(not set)</td><td>K8s service account via Downward API</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{{end}}

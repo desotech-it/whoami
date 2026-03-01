@@ -1,0 +1,68 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-success text-white"><strong>WebSocket Echo</strong></div>
+				<div class="card-body">
+					<div class="form-inline mb-3">
+						<input type="text" id="ws-input" class="form-control mr-2 flex-fill" placeholder="Type a message...">
+						<button id="ws-send" class="btn btn-success" disabled>Send</button>
+					</div>
+					<div id="ws-status" class="mb-2">
+						<span class="badge badge-secondary">Connecting...</span>
+					</div>
+					<pre id="ws-log" class="request-pre" style="min-height:200px;max-height:400px;overflow-y:auto;"></pre>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+<script>
+(function() {
+	var log = document.getElementById('ws-log');
+	var input = document.getElementById('ws-input');
+	var btn = document.getElementById('ws-send');
+	var status = document.getElementById('ws-status');
+	var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+	var ws = new WebSocket(proto + '//' + location.host + '/ws');
+
+	function appendLog(msg) {
+		log.textContent += msg + '\n';
+		log.scrollTop = log.scrollHeight;
+	}
+
+	ws.onopen = function() {
+		status.innerHTML = '<span class="badge badge-success">Connected</span>';
+		btn.disabled = false;
+		appendLog('[connected]');
+	};
+	ws.onmessage = function(e) {
+		appendLog('< ' + e.data);
+	};
+	ws.onclose = function() {
+		status.innerHTML = '<span class="badge badge-danger">Disconnected</span>';
+		btn.disabled = true;
+		appendLog('[disconnected]');
+	};
+	ws.onerror = function() {
+		appendLog('[error]');
+	};
+
+	function send() {
+		var msg = input.value;
+		if (msg && ws.readyState === WebSocket.OPEN) {
+			ws.send(msg);
+			appendLog('> ' + msg);
+			input.value = '';
+		}
+	}
+
+	btn.onclick = send;
+	input.onkeydown = function(e) {
+		if (e.key === 'Enter') send();
+	};
+})();
+</script>
+{{end}}

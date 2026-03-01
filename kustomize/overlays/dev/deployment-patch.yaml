@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: whoami
+          env:
+            - name: READINESS_DELAY
+              value: "0s"
+            - name: HEALTH_DELAY
+              value: "0s"
+            - name: LOG_INTERVAL
+              value: "5s"
+            - name: NAME_APPLICATION
+              value: "goldie"
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi

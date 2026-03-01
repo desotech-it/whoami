@@ -1,0 +1,23 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-primary text-white"><strong>Kubernetes Metadata</strong></div>
+				<div class="table-responsive">
+					<table class="table mb-0">
+						<tbody>
+							<tr><td class="font-weight-bold">Pod Name</td><td><code>{{.Meta.PodName}}</code></td></tr>
+							<tr><td class="font-weight-bold">Namespace</td><td><code>{{.Meta.Namespace}}</code></td></tr>
+							<tr><td class="font-weight-bold">Node Name</td><td><code>{{.Meta.NodeName}}</code></td></tr>
+							<tr><td class="font-weight-bold">Service Account</td><td><code>{{.Meta.ServiceAccount}}</code></td></tr>
+							<tr><td class="font-weight-bold">Pod IP</td><td><code>{{.Meta.PodIP}}</code></td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}

@@ -1,7 +1,12 @@
 version: 2
 updates:
   - package-ecosystem: gomod
-    target-branch: dev
+    target-branch: main
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    target-branch: main
     directory: /
     schedule:
       interval: weekly

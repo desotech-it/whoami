@@ -1,0 +1,17 @@
+apiVersion: v2
+name: whoami
+description: A Kubernetes training lab application by DesoLabs/Desotech
+type: application
+version: 0.1.0
+appVersion: "0.6.0"
+keywords:
+  - kubernetes
+  - training
+  - demo
+  - whoami
+home: https://github.com/desotech-it/whoami
+sources:
+  - https://github.com/desotech-it/whoami
+maintainers:
+  - name: Desotech
+    url: https://www.desotech.it
