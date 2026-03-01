@@ -3,6 +3,7 @@ package view
 import (
 	"html/template"
 	"sync"
+	"time"
 )
 
 var (
@@ -45,8 +46,12 @@ func withLabInfo(filenames ...string) []string {
 	return append(filenames, "template/labinfo.gohtml")
 }
 
+var funcMap = template.FuncMap{
+	"year": func() int { return time.Now().Year() },
+}
+
 func parseAllTemplates() {
-	baseTemplate = template.Must(template.ParseFiles("template/base.gohtml"))
+	baseTemplate = template.Must(template.New("base.gohtml").Funcs(funcMap).ParseFiles("template/base.gohtml"))
 
 	// Existing pages
 	imageTemplate = cloneFromTemplate(baseTemplate, "template/image.gohtml", "template/whoami.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
