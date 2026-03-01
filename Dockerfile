@@ -25,6 +25,6 @@ WORKDIR /whoami
 
 RUN touch readiness
 
-ENTRYPOINT ["./whoami", "-p", "80"]
+ENTRYPOINT ["./whoami", "-p", "80", "-tp", "443"]
 
-EXPOSE 80
+EXPOSE 80 443

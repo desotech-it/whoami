@@ -8,7 +8,8 @@ import (
 func main() {
 	config := app.GetConfig()
 	server := server.Server{
-		Port: config.Port,
+		Port:    config.Port,
+		TLSPort: config.TLSPort,
 	}
 	server.Start()
 }

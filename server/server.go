@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -351,7 +352,8 @@ func docsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Server struct {
-	Port uint64
+	Port    uint64
+	TLSPort uint64
 }
 
 func assignRootHandler() {
@@ -428,11 +430,33 @@ func (s *Server) Start() {
 	defer stop()
 
 	go func() {
-		log.Printf("Listening on %s", address)
+		log.Printf("Listening HTTP on %s", address)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatal(err)
 		}
 	}()
+
+	// TLS server (optional)
+	var tlsSrv *http.Server
+	if s.TLSPort > 0 {
+		cert, err := app.GenerateSelfSignedCert()
+		if err != nil {
+			log.Fatalf("Failed to generate self-signed certificate: %v", err)
+		}
+		tlsAddress := fmt.Sprintf(":%d", s.TLSPort)
+		tlsSrv = &http.Server{
+			Addr: tlsAddress,
+			TLSConfig: &tls.Config{
+				Certificates: []tls.Certificate{cert},
+			},
+		}
+		go func() {
+			log.Printf("Listening HTTPS on %s", tlsAddress)
+			if err := tlsSrv.ListenAndServeTLS("", ""); err != nil && err != http.ErrServerClosed {
+				log.Fatal(err)
+			}
+		}()
+	}
 
 	// Env-triggered stress tests
 	if d := app.GetCPUStressDuration(); d > 0 {
@@ -457,7 +481,12 @@ func (s *Server) Start() {
 	defer cancel()
 
 	if err := srv.Shutdown(shutdownCtx); err != nil {
-		log.Printf("Shutdown error: %v", err)
+		log.Printf("HTTP shutdown error: %v", err)
+	}
+	if tlsSrv != nil {
+		if err := tlsSrv.Shutdown(shutdownCtx); err != nil {
+			log.Printf("HTTPS shutdown error: %v", err)
+		}
 	}
 	log.Println("Server stopped")
 }
