@@ -1,0 +1,107 @@
+# -- Number of replicas
+replicaCount: 1
+
+image:
+  # -- Container image repository
+  repository: r.deso.tech/whoami/whoami
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+  # -- Image tag (defaults to appVersion)
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Create a ServiceAccount
+  create: true
+  # -- Automount API credentials
+  automount: true
+  # -- ServiceAccount annotations
+  annotations: {}
+  # -- ServiceAccount name override
+  name: ""
+
+# -- Application environment variables
+# Parsed by time.ParseDuration; plain integers are treated as seconds.
+env:
+  HEALTH_DELAY: "0s"
+  READINESS_DELAY: "15s"
+  STARTUP_DELAY: "0s"
+  SHUTDOWN_DELAY: "0s"
+  LOG_INTERVAL: "2s"
+
+# -- Override root handler with a K8s character.
+# Valid values: goldie, zee, captainkube, phippy, or "" for default.
+nameApplication: ""
+
+# -- Kubernetes Downward API injection.
+# Populates POD_NAME, POD_NAMESPACE, NODE_NAME, POD_IP, SERVICE_ACCOUNT.
+downwardAPI:
+  enabled: true
+
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Service port
+  port: 80
+
+ingress:
+  # -- Enable Ingress
+  enabled: false
+  # -- Ingress class name
+  className: ""
+  # -- Ingress annotations
+  annotations: {}
+  hosts:
+    - host: whoami.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# -- Container resource requests and limits
+resources: {}
+  # limits:
+  #   cpu: 200m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 64Mi
+
+# -- Liveness probe (GET /healthz)
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+
+# -- Readiness probe (GET /readiness)
+readinessProbe:
+  httpGet:
+    path: /readiness
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 3
+
+autoscaling:
+  # -- Enable HorizontalPodAutoscaler
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
