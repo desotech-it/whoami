@@ -54,5 +54,10 @@ startButton.addEventListener('click', e => {
 	fetch('/memstress', {
 		method: 'POST',
 		body: new URLSearchParams(`magnitude=${magnitudeField.value}&unit=${unitField.value}`),
-	}).catch(console.err);
+	}).catch(console.error);
+});
+
+const stopButton = document.querySelector('#stop-button');
+stopButton.addEventListener('click', () => {
+	fetch('/memstress', { method: 'DELETE' }).catch(console.error);
 });
