@@ -74,19 +74,10 @@ clean:
 fmt:
 	$(GOFMT) -s -w .
 
-.PHONY: docker-linux
-docker-linux:
-	docker buildx build --push --platform linux/amd64 -t '$(DOCKER_IMAGE):amd64-$(VERSION)' -t '$(DOCKER_IMAGE):amd64' .
-	docker buildx build --push --platform linux/arm64/v8 -t '$(DOCKER_IMAGE):arm64v8-$(VERSION)' -t '$(DOCKER_IMAGE):arm64v8' .
-
-.PHONY: docker-shared
-docker-shared:
-	docker manifest create '$(DOCKER_IMAGE):$(VERSION)' \
-		'$(DOCKER_IMAGE):amd64-$(VERSION)' \
-		'$(DOCKER_IMAGE):arm64v8-$(VERSION)'
-	docker manifest push '$(DOCKER_IMAGE):$(VERSION)'
-
-	docker manifest create '$(DOCKER_IMAGE):latest' \
-		'$(DOCKER_IMAGE):amd64' \
-		'$(DOCKER_IMAGE):arm64v8'
-	docker manifest push '$(DOCKER_IMAGE):latest'
+.PHONY: docker
+docker:
+	docker buildx build --push \
+		--platform linux/amd64,linux/arm64 \
+		-t '$(DOCKER_IMAGE):$(VERSION)' \
+		-t '$(DOCKER_IMAGE):latest' \
+		.

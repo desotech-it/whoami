@@ -190,8 +190,8 @@ make
 # Cross-compile all platforms
 make xcompress
 
-# Docker (linux multi-arch)
-make docker-linux
+# Docker (linux/amd64 + linux/arm64)
+make docker
 
 # Clean
 make clean
