@@ -58,6 +58,10 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 		v := view.NewCPUStressView("CPU Load", stats)
 		v.Write(w)
 	case "POST":
+		if app.IsOSDarwin() {
+			http.Error(w, "CPU stress is not supported on macOS", http.StatusNotImplemented)
+			return
+		}
 		r.ParseForm()
 		form := r.Form
 		magnitude := form.Get("magnitude")
