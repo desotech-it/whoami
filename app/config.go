@@ -13,15 +13,18 @@ var (
 )
 
 type Config struct {
-	Port uint64
+	Port    uint64
+	TLSPort uint64
 }
 
 var port = flag.Uint64("port", 8080, "")
+var tlsPort = flag.Uint64("tls-port", 0, "")
 var versionFlag = flag.Bool("version", false, "Print app version")
 
 func init() {
-	// short version
+	// short versions
 	flag.Uint64Var(port, "p", 8080, "")
+	flag.Uint64Var(tlsPort, "tp", 0, "")
 	flag.Parse()
 
 	if *versionFlag {
@@ -32,6 +35,7 @@ func init() {
 
 func GetConfig() Config {
 	return Config{
-		*port,
+		Port:    *port,
+		TLSPort: *tlsPort,
 	}
 }
