@@ -72,6 +72,12 @@ func cpustressHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		http.Error(w, err.Error(), http.StatusBadRequest)
+	case "DELETE":
+		if util.StopCPUStress() {
+			w.WriteHeader(http.StatusOK)
+		} else {
+			http.Error(w, "no CPU stress running", http.StatusNotFound)
+		}
 	}
 }
 
@@ -94,6 +100,12 @@ func memstressHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		http.Error(w, err.Error(), http.StatusBadRequest)
+	case "DELETE":
+		if util.StopMemStress() {
+			w.WriteHeader(http.StatusOK)
+		} else {
+			http.Error(w, "no memory stress running", http.StatusNotFound)
+		}
 	}
 }
 
