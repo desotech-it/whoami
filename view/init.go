@@ -50,7 +50,7 @@ func parseAllTemplates() {
 
 	// Existing pages
 	imageTemplate = cloneFromTemplate(baseTemplate, "template/image.gohtml", "template/whoami.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
-	indexTemplate = cloneFromTemplate(baseTemplate, "template/index.gohtml", "template/whoami.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
+	indexTemplate = cloneFromTemplate(baseTemplate, "template/index.gohtml", "template/request.gohtml", "template/clientinfo.gohtml")
 	cpuStressTemplate = cloneFromTemplate(baseTemplate, "template/cpustress.gohtml")
 	unsupportedTemplate = cloneFromTemplate(baseTemplate, "template/unsupported.gohtml")
 	memStressTemplate = cloneFromTemplate(baseTemplate, "template/memstress.gohtml")

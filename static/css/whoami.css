@@ -59,9 +59,10 @@ input[type=number] {
 	font-size: 0.85rem;
 }
 
-/* Navbar brand styling */
-.navbar-brand svg {
-	opacity: 0.9;
+/* Navbar brand logo */
+#navbar-logo {
+	height: 28px;
+	width: auto;
 }
 
 /* Footer styling */

@@ -1,11 +1,13 @@
 package util
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"path/filepath"
 	"sort"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/desotech-it/whoami/app"
 	"github.com/olekukonko/tablewriter"
@@ -28,34 +30,77 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, cli
 		sort.Strings(ifaces)
 
 		for _, iface := range ifaces {
-			addrs := info.Addresses[iface]
-			for _, addr := range addrs {
+			for _, addr := range info.Addresses[iface] {
 				table.Append([]string{iface, addr})
 			}
 		}
 		table.Render()
 	}
 
-	// HTTP Request (plain text, no table)
 	fmt.Fprintln(w)
-	requestClean := strings.ReplaceAll(request, "\r\n", "\n")
-	for _, line := range strings.Split(requestClean, "\n") {
-		fmt.Fprintf(w, "  %s\n", line)
+
+	// HTTP Request and Client Info side by side
+	var leftBuf, rightBuf bytes.Buffer
+
+	// Left: HTTP Request
+	{
+		table := tablewriter.NewTable(&leftBuf)
+		table.Header("HTTP Request")
+		requestClean := strings.TrimSpace(strings.ReplaceAll(request, "\r\n", "\n"))
+		for _, line := range strings.Split(requestClean, "\n") {
+			if line != "" {
+				table.Append([]string{line})
+			}
+		}
+		table.Render()
 	}
 
-	// Client Info (single line, compact)
-	fmt.Fprintln(w)
-	keys := make([]string, 0, len(clientInfo))
-	for k := range clientInfo {
-		keys = append(keys, k)
+	// Right: Client Info
+	{
+		table := tablewriter.NewTable(&rightBuf)
+		table.Header("Key", "Value")
+		keys := make([]string, 0, len(clientInfo))
+		for k := range clientInfo {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		for _, k := range keys {
+			table.Append([]string{k, clientInfo[k]})
+		}
+		table.Render()
 	}
-	sort.Strings(keys)
 
-	parts := make([]string, 0, len(keys))
-	for _, k := range keys {
-		parts = append(parts, fmt.Sprintf("%s=%s", k, clientInfo[k]))
+	printSideBySide(w, leftBuf.String(), rightBuf.String(), 2)
+}
+
+// printSideBySide renders two multi-line strings side by side with a gap between them.
+func printSideBySide(w io.Writer, left, right string, gap int) {
+	leftLines := strings.Split(strings.TrimRight(left, "\n"), "\n")
+	rightLines := strings.Split(strings.TrimRight(right, "\n"), "\n")
+
+	maxWidth := 0
+	for _, line := range leftLines {
+		if width := utf8.RuneCountInString(line); width > maxWidth {
+			maxWidth = width
+		}
 	}
-	fmt.Fprintf(w, "Client: %s\n", strings.Join(parts, "  "))
+
+	maxRows := len(leftLines)
+	if len(rightLines) > maxRows {
+		maxRows = len(rightLines)
+	}
+
+	for i := 0; i < maxRows; i++ {
+		var l, r string
+		if i < len(leftLines) {
+			l = leftLines[i]
+		}
+		if i < len(rightLines) {
+			r = rightLines[i]
+		}
+		padding := maxWidth - utf8.RuneCountInString(l) + gap
+		fmt.Fprintf(w, "%s%s%s\n", l, strings.Repeat(" ", padding), r)
+	}
 }
 
 func WriteImageAsText(w io.Writer, imageFilename string) {
