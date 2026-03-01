@@ -4,15 +4,13 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/static/css/gh-fork-ribbon.min.css">
 		<link rel="stylesheet" href="/static/css/whoami.css">
 		<link rel="icon" type="img/png" href="/static/images/favicon.png">
 		<title>{{.Title}}</title>
 	</head>
 	<body class="vh-100 bg-light">
 		<section class="d-flex flex-column vh-100">
-			<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-				<a id="github-ribbon" class="github-fork-ribbon right-top" href="https://github.com/desotech-it/whoami" data-ribbon="Fork me on GitHub" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
+			<nav class="navbar navbar-dark bg-dark shadow-sm">
 				<a class="navbar-brand font-weight-bold" href="/">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="d-inline-block align-top mr-1" viewBox="0 0 16 16">
 						<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -20,13 +18,59 @@
 					</svg>
 					WhoAmI
 				</a>
-				<div class="navbar-nav ml-auto flex-row">
-					<a class="nav-link px-2" href="/cpustress">CPU Stress</a>
-					<a class="nav-link px-2" href="/memstress">Mem Stress</a>
-					<a class="nav-link px-2" href="/captainkube">Captain Kube</a>
-					<a class="nav-link px-2" href="/goldie">Goldie</a>
-					<a class="nav-link px-2" href="/phippy">Phippy</a>
-					<a class="nav-link px-2" href="/zee">Zee</a>
+				<div class="navbar-nav ml-auto flex-row flex-wrap">
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">System Info</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/">Host &amp; Network</a>
+							<a class="nav-dropdown-item" href="/env">Environment</a>
+							<a class="nav-dropdown-item" href="/k8s">K8s Metadata</a>
+							<a class="nav-dropdown-item" href="/resources">Resource Limits</a>
+							<a class="nav-dropdown-item" href="/volumes">Volumes</a>
+							<a class="nav-dropdown-item" href="/osinfo">OS &amp; Runtime</a>
+							<a class="nav-dropdown-item" href="/dns">DNS Config</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">HTTP Tools</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/headers">Echo Headers</a>
+							<a class="nav-dropdown-item" href="/status">Status Code</a>
+							<a class="nav-dropdown-item" href="/delay">Response Delay</a>
+							<a class="nav-dropdown-item" href="/counter">Request Counter</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Resilience</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/healthz">Health Probe</a>
+							<a class="nav-dropdown-item" href="/readiness">Readiness Probe</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Networking</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/downstream">Downstream Call</a>
+							<a class="nav-dropdown-item" href="/ws">WebSocket</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Stress Test</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/cpustress">CPU Stress</a>
+							<a class="nav-dropdown-item" href="/memstress">Mem Stress</a>
+						</div>
+					</div>
+					<div class="nav-dropdown">
+						<a class="nav-link px-2" href="#">Characters</a>
+						<div class="nav-dropdown-menu">
+							<a class="nav-dropdown-item" href="/captainkube">Captain Kube</a>
+							<a class="nav-dropdown-item" href="/goldie">Goldie</a>
+							<a class="nav-dropdown-item" href="/phippy">Phippy</a>
+							<a class="nav-dropdown-item" href="/zee">Zee</a>
+						</div>
+					</div>
+					<a class="nav-link px-2" href="/docs">Docs</a>
 				</div>
 			</nav>
 			<main class="container py-4 flex-fill">

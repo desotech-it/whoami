@@ -1,0 +1,25 @@
+{{define "labinfo"}}
+{{if .LabInfo}}
+<div class="row mt-3">
+	<div class="col-12">
+		<details class="card shadow-sm border-0 lab-info">
+			<summary class="card-header bg-secondary text-white d-flex align-items-center">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="mr-2" viewBox="0 0 16 16">
+					<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.399l-.451.003.082-.381 1.97-.411.164-.014z"/>
+					<path d="M8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+				</svg>
+				<strong>Lab Info</strong>
+			</summary>
+			<div class="card-body">
+				<h6 class="text-primary">What This Demonstrates</h6>
+				<p>{{.LabInfo.Description}}</p>
+				{{if .LabInfo.Usage}}
+				<h6 class="text-primary">How to Use in Lab</h6>
+				<pre class="bg-light p-3 rounded"><code>{{.LabInfo.Usage}}</code></pre>
+				{{end}}
+			</div>
+		</details>
+	</div>
+</div>
+{{end}}
+{{end}}

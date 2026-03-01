@@ -22,11 +22,6 @@ input[type=number] {
 	margin: 16px;
 }
 
-/* GitHub ribbon */
-#github-ribbon:before {
-	background-color: #28a745;
-}
-
 /* Hostname value */
 .hostname-value {
 	font-size: 1.5rem;
@@ -74,14 +69,81 @@ footer p {
 	font-size: 0.85rem;
 }
 
+/* Pure CSS dropdown menu */
+.nav-dropdown {
+	position: relative;
+}
+
+.nav-dropdown > .nav-link::after {
+	content: " \25BE";
+	font-size: 0.7em;
+}
+
+.nav-dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background-color: #343a40;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.25rem;
+	min-width: 180px;
+	z-index: 1000;
+	padding: 0.25rem 0;
+	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+.nav-dropdown:hover > .nav-dropdown-menu,
+.nav-dropdown:focus-within > .nav-dropdown-menu {
+	display: block;
+}
+
+.nav-dropdown-item {
+	display: block;
+	padding: 0.4rem 1rem;
+	color: rgba(255, 255, 255, 0.75);
+	text-decoration: none;
+	font-size: 0.9rem;
+	white-space: nowrap;
+}
+
+.nav-dropdown-item:hover {
+	color: #fff;
+	background-color: rgba(255, 255, 255, 0.1);
+	text-decoration: none;
+}
+
+/* Lab Info details block */
+details.lab-info > summary {
+	cursor: pointer;
+	list-style: none;
+}
+
+details.lab-info > summary::-webkit-details-marker {
+	display: none;
+}
+
+details.lab-info > summary::after {
+	content: " \25B6";
+	font-size: 0.7em;
+	transition: transform 0.2s;
+}
+
+details.lab-info[open] > summary::after {
+	content: " \25BC";
+}
+
 /* Responsive adjustments */
 @media (max-width: 991.98px) {
-	.navbar-nav {
-		flex-wrap: wrap;
-		justify-content: flex-end;
-	}
 	.navbar-nav .nav-link {
 		font-size: 0.85rem;
 		padding: 0.25rem 0.5rem !important;
+	}
+	.nav-dropdown-menu {
+		position: static;
+		border: none;
+		box-shadow: none;
+		padding-left: 1rem;
+		min-width: auto;
 	}
 }
