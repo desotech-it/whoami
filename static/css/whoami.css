@@ -148,3 +148,92 @@ details.lab-info[open] > summary::after {
 		min-width: auto;
 	}
 }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+	body.bg-light {
+		background-color: #1a1d21 !important;
+		color: #e0e0e0;
+	}
+
+	.card {
+		background-color: #2b2f33;
+		border-color: #3a3f44;
+		color: #e0e0e0;
+	}
+
+	.card-header {
+		background-color: #343a40;
+		border-color: #3a3f44;
+		color: #e0e0e0;
+	}
+
+	.card:hover {
+		box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4) !important;
+	}
+
+	.table {
+		color: #e0e0e0;
+	}
+
+	.table td, .table th {
+		border-color: #3a3f44;
+	}
+
+	.table-striped tbody tr:nth-of-type(odd) {
+		background-color: rgba(255, 255, 255, 0.03);
+	}
+
+	.table-hover tbody tr:hover {
+		background-color: rgba(255, 255, 255, 0.06);
+		color: #e0e0e0;
+	}
+
+	.list-group-item {
+		background-color: #2b2f33;
+		border-color: #3a3f44;
+		color: #e0e0e0;
+	}
+
+	.hostname-value {
+		color: #5ba3f5;
+	}
+
+	.request-pre {
+		background-color: #212529;
+		border-color: rgba(255, 255, 255, 0.05);
+		color: #e0e0e0;
+	}
+
+	.client-info-key {
+		background-color: rgba(255, 255, 255, 0.04);
+	}
+
+	.form-control, .custom-select {
+		background-color: #343a40;
+		border-color: #495057;
+		color: #e0e0e0;
+	}
+
+	.form-control:focus, .custom-select:focus {
+		background-color: #3a3f44;
+		border-color: #5ba3f5;
+		color: #e0e0e0;
+	}
+
+	pre, code {
+		color: #e0e0e0;
+	}
+
+	.text-muted {
+		color: #9a9da0 !important;
+	}
+
+	a {
+		color: #5ba3f5;
+	}
+
+	a:hover {
+		color: #82bbf7;
+	}
+}
