@@ -4,6 +4,8 @@ import (
 	"html/template"
 	"sync"
 	"time"
+
+	"github.com/desotech-it/whoami/app"
 )
 
 var (
@@ -47,7 +49,8 @@ func withLabInfo(filenames ...string) []string {
 }
 
 var funcMap = template.FuncMap{
-	"year": func() int { return time.Now().Year() },
+	"year":     func() int { return time.Now().Year() },
+	"hostname": func() string { return app.Info.Hostname },
 }
 
 func parseAllTemplates() {
