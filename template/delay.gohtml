@@ -1,0 +1,17 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0 text-center py-5">
+				<div class="card-body">
+					<h2 class="text-success">Response Delivered</h2>
+					<p class="lead">Delayed by <strong>{{.Duration}}</strong></p>
+					<hr>
+					<p>Try: <code>/delay?duration=1s</code> <code>/delay?duration=500ms</code> <code>/delay?duration=30s</code></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}

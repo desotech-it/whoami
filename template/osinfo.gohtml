@@ -1,0 +1,24 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-info text-white"><strong>OS &amp; Runtime</strong></div>
+				<div class="table-responsive">
+					<table class="table mb-0">
+						<tbody>
+							<tr><td class="font-weight-bold">Hostname</td><td><code>{{.Info.Hostname}}</code></td></tr>
+							<tr><td class="font-weight-bold">OS</td><td><code>{{.Info.OS}}</code></td></tr>
+							<tr><td class="font-weight-bold">Architecture</td><td><code>{{.Info.Arch}}</code></td></tr>
+							<tr><td class="font-weight-bold">Go Version</td><td><code>{{.Info.GoVersion}}</code></td></tr>
+							<tr><td class="font-weight-bold">CPUs</td><td><code>{{.Info.NumCPU}}</code></td></tr>
+							<tr><td class="font-weight-bold">Uptime</td><td><code>{{.Info.Uptime}}</code></td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}

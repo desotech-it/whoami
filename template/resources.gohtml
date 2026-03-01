@@ -1,0 +1,22 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-danger text-white"><strong>Resource Limits (cgroup)</strong></div>
+				<div class="table-responsive">
+					<table class="table mb-0">
+						<tbody>
+							<tr><td class="font-weight-bold">CPU Quota</td><td><code>{{.Limits.CPUQuota}}</code></td></tr>
+							<tr><td class="font-weight-bold">CPU Period</td><td><code>{{.Limits.CPUPeriod}}</code></td></tr>
+							<tr><td class="font-weight-bold">Memory Limit</td><td><code>{{.Limits.MemLimit}}</code></td></tr>
+							<tr><td class="font-weight-bold">Memory Usage</td><td><code>{{.Limits.MemUsage}}</code></td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}

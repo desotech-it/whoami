@@ -1,0 +1,28 @@
+{{define "main"}}
+<div class="mt-4">
+	<div class="row">
+		<div class="col-12 mb-3">
+			<div class="card shadow-sm border-0">
+				<div class="card-header bg-primary text-white d-flex align-items-center">
+					<strong>Environment Variables</strong>
+					<span class="badge badge-light ml-2">{{len .Vars}}</span>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped table-sm mb-0">
+						<thead><tr><th>Variable</th><th>Value</th></tr></thead>
+						<tbody>
+						{{range .Vars}}
+							<tr>
+								<td class="font-weight-bold text-nowrap"><code>{{.Key}}</code></td>
+								<td><code>{{.Value}}</code></td>
+							</tr>
+						{{end}}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{template "labinfo" .}}
+</div>
+{{end}}
