@@ -9,25 +9,18 @@ import (
 
 	"github.com/desotech-it/whoami/app"
 	"github.com/olekukonko/tablewriter"
-	"github.com/olekukonko/tablewriter/tw"
 	"github.com/qeesung/image2ascii/convert"
 )
 
 func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, clientInfo map[string]string) {
-	// Header banner
-	fmt.Fprintln(w, "=== WhoAmI ===")
-	fmt.Fprintln(w)
+	// Hostname
+	fmt.Fprintf(w, "Hostname: %s\n\n", info.Hostname)
 
-	// Hostname section
-	fmt.Fprintf(w, "Hostname: %s\n", info.Hostname)
-	fmt.Fprintln(w)
-
-	// Network Interfaces section
+	// Network Interfaces
 	{
 		table := tablewriter.NewTable(w)
 		table.Header("Interface", "Address")
 
-		// Sort interfaces for consistent output
 		ifaces := make([]string, 0, len(info.Addresses))
 		for iface := range info.Addresses {
 			ifaces = append(ifaces, iface)
@@ -42,43 +35,27 @@ func WriteWhoamiInfoAsText(w io.Writer, info app.WhoamiInfo, request string, cli
 		}
 		table.Render()
 	}
+
+	// HTTP Request (plain text, no table)
 	fmt.Fprintln(w)
-
-	// HTTP Request section
-	{
-		requestNoCarriageReturn := strings.ReplaceAll(request, "\r\n", "\n")
-		table := tablewriter.NewTable(w,
-			tablewriter.WithConfig(tablewriter.Config{
-				Row: tw.CellConfig{
-					Formatting: tw.CellFormatting{
-						AutoWrap: tw.WrapNone,
-					},
-				},
-			}),
-		)
-		table.Header("HTTP Request")
-		table.Append([]string{requestNoCarriageReturn})
-		table.Render()
+	requestClean := strings.ReplaceAll(request, "\r\n", "\n")
+	for _, line := range strings.Split(requestClean, "\n") {
+		fmt.Fprintf(w, "  %s\n", line)
 	}
+
+	// Client Info (single line, compact)
 	fmt.Fprintln(w)
-
-	// Client Info section
-	{
-		table := tablewriter.NewTable(w)
-		table.Header("Key", "Value")
-
-		// Sort keys for consistent output
-		keys := make([]string, 0, len(clientInfo))
-		for k := range clientInfo {
-			keys = append(keys, k)
-		}
-		sort.Strings(keys)
-
-		for _, k := range keys {
-			table.Append([]string{k, clientInfo[k]})
-		}
-		table.Render()
+	keys := make([]string, 0, len(clientInfo))
+	for k := range clientInfo {
+		keys = append(keys, k)
 	}
+	sort.Strings(keys)
+
+	parts := make([]string, 0, len(keys))
+	for _, k := range keys {
+		parts = append(parts, fmt.Sprintf("%s=%s", k, clientInfo[k]))
+	}
+	fmt.Fprintf(w, "Client: %s\n", strings.Join(parts, "  "))
 }
 
 func WriteImageAsText(w io.Writer, imageFilename string) {
