@@ -26,7 +26,7 @@ jobs:
           install: true
 
       - name: Login to container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: r.deso.tech
           username: ${{ secrets.REGISTRY_USERNAME }}
